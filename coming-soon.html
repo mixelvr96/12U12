@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>12 UNDER 12 — Coming soon</title>
+  <style>
+    html, body {
+      margin: 0;
+      background: #70020f;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    main {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Обёртка: поверх картинки — круглая зона «Join our newsletter» на сургуче */
+    .coming-soon-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 1242px;
+    }
+
+    .coming-soon-art {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .newsletter-seal {
+      position: absolute;
+      left: 50%;
+      bottom: 30.5%;
+      width: 34%;
+      max-width: 380px;
+      aspect-ratio: 1;
+      transform: translate(-50%, -8px);
+      border-radius: 50%;
+      box-sizing: border-box;
+      background: transparent;
+      cursor: pointer;
+      -webkit-tap-highlight-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .newsletter-seal:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .newsletter-seal:focus {
+      outline: none;
+    }
+
+    .newsletter-seal:focus-visible {
+      outline: 3px solid rgba(255, 255, 255, 0.95);
+      outline-offset: 3px;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1 class="visually-hidden">Zorka.Agency × Influencer Marketing Hub — coming soon. Stay tuned.</h1>
+    <div class="coming-soon-wrap">
+      <img class="coming-soon-art" src="images/coming-soon.png?v=19" alt="Zorka.Agency × Influencer Marketing Hub. Coming soon. Stay tuned. Join our newsletter on the wax seal." width="1242" height="2688">
+      <a
+        class="newsletter-seal"
+        href="mailto:info@zorka.agency?subject=12%20UNDER%2012%20%E2%80%94%20Newsletter&amp;body=Please%20subscribe%20me%20to%20the%20email%20newsletter.%0A%0AMy%20email%3A%20"
+        title="Subscribe — info@zorka.agency"
+        aria-label="Join our newsletter: send an email to info@zorka.agency to subscribe"
+      >
+        <span class="visually-hidden">Join our newsletter — info@zorka.agency</span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>

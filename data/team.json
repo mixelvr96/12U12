@@ -1,0 +1,30 @@
+{
+  "intro": "People who make this format possible",
+  "members": [
+    {
+      "name": "{Name}",
+      "role": "{title}",
+      "comment": "{quote}"
+    },
+    {
+      "name": "{Name}",
+      "role": "{title}",
+      "comment": "{quote}"
+    },
+    {
+      "name": "{Name}",
+      "role": "{title}",
+      "comment": "{quote}"
+    },
+    {
+      "name": "{Name}",
+      "role": "{title}",
+      "comment": "{quote}"
+    },
+    {
+      "name": "{Name}",
+      "role": "{title}",
+      "comment": "{quote}"
+    }
+  ]
+}

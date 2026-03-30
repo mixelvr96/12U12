@@ -1,0 +1,86 @@
+{
+  "projectTitle": "12 UNDER 12",
+  "heroDescription": "A platform for marketers shaping the industry to share honest insights\nbeyond brand narratives",
+  "mission": {
+    "title": "",
+    "quote": "We see how often talents and hard work can be unseen,\nand our goal is to remind who actually make\nthe vision happen."
+  },
+  "aboutIntro": {
+    "paragraphs": [
+      "12 UNDER 12 is a collaborative project by Zorka.Agency and Influencer Marketing Hub, created to spotlight the people behind the industry. As Zorka.Agency marks 12 years in influencer marketing, we chose to celebrate this milestone by giving the stage to others. The concept is simple: 12 months, 12 marketers who have made a real impact on the industry.",
+      "We launched this project because influencer marketing still lacks platforms where professionals can openly share their honest experiences, challenges, and perspectives beyond brand narratives. Too often, the focus is on campaigns and results — not on the people making it all happen.",
+      "12 UNDER 12 changes that by creating a space for marketers to speak openly, share real insights, and shape the conversation around the industry today."
+    ]
+  },
+  "marketers": [
+    {
+      "id": 1,
+      "status": "published",
+      "name": "Alyona",
+      "surname": "Kovaleva",
+      "role": "Head of Influencer Marketing",
+      "company": "Nova Brands",
+      "polaroidMonth": "APRIL",
+      "photo": "images/marketers/01.jpg",
+      "intro": "Alyona builds influencer programs that balance long-term brand reputation with measurable business outcomes across global and local markets.",
+      "quotes": [
+        {
+          "text": "The most difficult part is not launching campaigns; it is building trust with creators before the campaign starts.",
+          "caption": "On creator partnerships"
+        },
+        {
+          "text": "We stopped choosing creators by follower count only and shifted to audience fit, retention, and qualitative sentiment.",
+          "caption": "On measurement"
+        },
+        {
+          "text": "Real influence appears when marketing, product, and community teams work as one unit.",
+          "caption": "On team alignment"
+        }
+      ],
+      "bioTitle": "Tell us about yourself",
+      "bio": "I started in performance marketing, then moved to influencer strategy when I realized that brand trust is built in conversations, not only in ads. Over the last years I have worked with startups and enterprise brands, helping teams design creator programs that can scale month over month.\n\nIn this project, I want to share the mistakes we made early, what changed after we started listening to creators more deeply, and how to build long-term collaboration frameworks.",
+      "sections": [
+        {
+          "title": "Biggest challenge",
+          "content": "One of the biggest challenges was proving the value of influencer marketing to teams that only looked at short-term CPA. We had to redesign reporting and show full-funnel impact."
+        },
+        {
+          "title": "What changed in 2025",
+          "content": "Brands became more selective and started prioritizing sustainable creator relationships instead of one-off integrations."
+        },
+        {
+          "title": "Advice to newcomers",
+          "content": "Start with the audience and their real behavior. A campaign is successful when the story feels natural to both the creator and the community."
+        },
+        {
+          "title": "Future outlook",
+          "content": "The next step is deeper creator co-creation where influencers are involved earlier in product and communication decisions."
+        }
+      ],
+      "qaCards": [
+        {
+          "question": "Why marketing?",
+          "answer": "Because it combines analytics, psychology, and creativity in one discipline."
+        },
+        {
+          "question": "Why this project?",
+          "answer": "It gives the industry practical stories from people doing the work every day."
+        },
+        {
+          "question": "One principle you follow",
+          "answer": "Consistency beats virality when building long-term brand equity."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "status": "coming_soon",
+      "monthEdition": "May edition"
+    },
+    {
+      "id": 3,
+      "status": "coming_soon",
+      "monthEdition": "June edition"
+    }
+  ]
+}
