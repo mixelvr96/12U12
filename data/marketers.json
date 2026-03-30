@@ -23,22 +23,9 @@
       "polaroidMonth": "APRIL",
       "photo": "images/marketers/01.jpg",
       "intro": "Alyona builds influencer programs that balance long-term brand reputation with measurable business outcomes across global and local markets.",
-      "quotes": [
-        {
-          "text": "The most difficult part is not launching campaigns; it is building trust with creators before the campaign starts.",
-          "caption": "On creator partnerships"
-        },
-        {
-          "text": "We stopped choosing creators by follower count only and shifted to audience fit, retention, and qualitative sentiment.",
-          "caption": "On measurement"
-        },
-        {
-          "text": "Real influence appears when marketing, product, and community teams work as one unit.",
-          "caption": "On team alignment"
-        }
-      ],
+      "quotes": [],
       "bioTitle": "Tell us about yourself",
-      "bio": "I started in performance marketing, then moved to influencer strategy when I realized that brand trust is built in conversations, not only in ads. Over the last years I have worked with startups and enterprise brands, helping teams design creator programs that can scale month over month.\n\nIn this project, I want to share the mistakes we made early, what changed after we started listening to creators more deeply, and how to build long-term collaboration frameworks.",
+      "bio": "I came up through performance marketing, but I crossed into influencer work the moment it sank in that trust is built in comments and DMs—not only in paid placements. Since then, I've split my time between scrappy teams and big brands, always chasing the same thing: programs that compound instead of resetting every quarter.\n\nFor this series I'm opening the notebook—early mistakes, what changed once we actually listened to creators, and the frameworks that keep partnerships from unraveling after the first brief.",
       "sections": [
         {
           "title": "Biggest challenge",
@@ -57,6 +44,24 @@
           "content": "The next step is deeper creator co-creation where influencers are involved earlier in product and communication decisions."
         }
       ],
+      "storyTopics": [
+        {
+          "title": "What makes your days easier—and what makes them harder?",
+          "content": "When the brief is tight, legal moves, and creators answer on time, the week almost runs itself. The grind is everything else: edits that land at midnight, five tools that don't talk, and the meeting where someone asks for a \"small\" tweak that torches the posting window. Half of this job is strategy; the other half is air-traffic control."
+        },
+        {
+          "title": "The best campaign you ever ran—what made it work?",
+          "content": "Not the one that blew up once. A year-long deal with a handful of creators who actually lived with the product, argued with us when something felt off, and stayed in the loop as we iterated. Revenue climbed without a spike; the comments read like real life. That's when I stopped chasing hero metrics on a slide deck."
+        },
+        {
+          "title": "Why is \"influencer\" inching toward \"ambassador\"?",
+          "content": "One-off integrations exhaust everyone. Brands want people who show up in CRM, at events, in lifecycle emails—relationships that behave more like ambassadors than ad units. Contracts get longer, briefs get heavier, accountability gets clearer. It's influencer marketing growing into something closer to community and CRM."
+        },
+        {
+          "title": "Do people still trust influencers?",
+          "content": "Trust didn't vanish—it got picky. Audiences reward the messy truth: how a product fits a real week, what still doesn't work, where the money comes from. They punish the polished script and the deal that never gets disclosed. Our job is to put brands next to voices who can stay human—and to label every paid line."
+        }
+      ],
       "qaCards": [
         {
           "question": "Why marketing?",
@@ -70,7 +75,12 @@
           "question": "One principle you follow",
           "answer": "Consistency beats virality when building long-term brand equity."
         }
-      ]
+      ],
+      "qaCardsStoryAfterTitle": "What makes your days easier—and what makes them harder?",
+      "closingCoda": {
+        "prompt": "Every time we will ask a question, that will wrap up your experience, and maybe the state of a whole industry.\n\nSo, what is the power of Influencer marketing?",
+        "answer": "PEOPLE BEHIND IT"
+      }
     },
     {
       "id": 2,

@@ -14,9 +14,12 @@
   --font-display: "Anton", sans-serif;
   --font-script: "Great Vibes", cursive;
   --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-editorial: Georgia, "Times New Roman", Times, serif;
   --photo-tile-max: 220px;
   --photo-hero-max: 420px;
   --photo-team-max: 330px;
+  /* Интервью и карусели на странице маркетолога — одна ширина */
+  --marketer-sections-width: min(100%, 56rem);
 }
 
 *,
@@ -113,7 +116,8 @@ a:hover {
 .site-header__tagline {
   grid-column: 1;
   place-self: center;
-  max-width: min(18rem, 100%);
+  max-width: none;
+  white-space: nowrap;
 }
 
 .site-header .site-header__hero-row .site-title {
@@ -126,7 +130,8 @@ a:hover {
 .site-header__year {
   grid-column: 3;
   place-self: center;
-  max-width: min(22rem, 100%);
+  max-width: none;
+  white-space: nowrap;
 }
 
 @media (max-width: 720px) {
@@ -136,10 +141,17 @@ a:hover {
     row-gap: 0.65rem;
   }
 
-  .site-header__tagline,
+  .site-header__tagline {
+    grid-column: 1;
+    place-self: center;
+    white-space: normal;
+    max-width: min(22rem, 100%);
+  }
+
   .site-header__year {
     grid-column: 1;
     place-self: center;
+    white-space: normal;
     max-width: min(22rem, 100%);
   }
 
@@ -925,10 +937,139 @@ a:hover {
 
 .marketer-hero-grid {
   display: grid;
-  grid-template-columns: 1fr 1.1fr 1fr;
-  gap: 2rem;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  column-gap: clamp(1.5rem, 3vw, 2.5rem);
+  row-gap: 1.1rem;
   align-items: start;
   margin-bottom: 3rem;
+}
+
+/* С QA: строка 1 — только имя/роль; строка 2 — описание+фото | вопросы (верх совпадает с описанием) */
+.marketer-hero-grid:not(.marketer-hero-grid--no-qa) {
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+  grid-template-rows: auto auto;
+}
+
+.marketer-hero-grid:not(.marketer-hero-grid--no-qa) .col-left__head {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.marketer-hero-grid:not(.marketer-hero-grid--no-qa) .col-left--body {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.marketer-hero-grid:not(.marketer-hero-grid--no-qa) .col-qa {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: start;
+  min-height: 0;
+}
+
+.marketer-hero-grid--no-qa {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-items: start;
+  max-width: min(100%, var(--max));
+}
+
+.marketer-hero-grid--no-qa .col-left__head {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+/* Фото в правой колонке с верхом на уровне имени (ряд 1–2, align-self: start) */
+.marketer-hero-grid--no-qa .col-photo--hero-rail {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: start;
+  width: 100%;
+  max-width: var(--photo-hero-max);
+  justify-self: end;
+}
+
+.marketer-hero-grid--no-qa .col-photo--hero-rail .photo-frame {
+  margin-left: auto;
+  margin-right: 0;
+  max-width: 100%;
+}
+
+.marketer-hero-grid--no-qa .col-left--body {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.col-left--body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.1rem;
+  min-width: 0;
+}
+
+.marketer-hero-grid .col-left--body .col-photo {
+  width: 100%;
+  max-width: var(--photo-hero-max);
+}
+
+.marketer-hero-grid:not(.marketer-hero-grid--no-qa) .col-left--body .col-photo .photo-frame {
+  margin-left: 0;
+  margin-right: auto;
+  max-width: 100%;
+}
+
+.col-qa {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-width: 0;
+  width: 100%;
+}
+
+.marketer-hero-grid .qa-row--hero {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+  margin: 0;
+  width: 100%;
+  min-height: 0;
+}
+
+/* Три QA в герое — журнальный стиль (как колонка интервью) */
+.marketer-hero-grid .qa-row--hero .qa-card {
+  border: none;
+  background: transparent;
+  padding: 0 0 0 1.1rem;
+  margin: 0;
+  border-left: 2px solid rgba(0, 151, 178, 0.65);
+  text-align: left;
+}
+
+.marketer-hero-grid .qa-row--hero .qa-card h4 {
+  font-family: var(--font-editorial);
+  font-size: clamp(0.92rem, 1.65vw, 1.05rem);
+  font-weight: 500;
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+  color: var(--white);
+  margin: 0 0 0.45rem;
+}
+
+.marketer-hero-grid .qa-row--hero .qa-card p {
+  font-family: var(--font-editorial);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.72;
+  color: rgba(255, 255, 255, 0.8);
+  hyphens: auto;
+}
+
+.marketer-hero-grid .qa-row--hero .qa-card:not(:last-child) {
+  padding-bottom: 1.15rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
 }
 
 @media (max-width: 900px) {
@@ -937,14 +1078,74 @@ a:hover {
     text-align: center;
   }
 
-  .marketer-hero-grid .col-photo {
-    order: -1;
-    max-width: min(100%, calc(var(--photo-hero-max) + 2rem));
-    margin: 0 auto;
+  .marketer-hero-grid:not(.marketer-hero-grid--no-qa) .col-left__head,
+  .marketer-hero-grid:not(.marketer-hero-grid--no-qa) .col-left--body,
+  .marketer-hero-grid:not(.marketer-hero-grid--no-qa) .col-qa {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .col-left--body {
+    align-items: center;
+    width: 100%;
+  }
+
+  .marketer-hero-grid--no-qa {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+
+  .marketer-hero-grid--no-qa .col-left__head {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .marketer-hero-grid--no-qa .col-photo--hero-rail {
+    grid-column: 1;
+    grid-row: 2;
+    grid-row-end: span 1;
+    justify-self: center;
+  }
+
+  .marketer-hero-grid--no-qa .col-left--body {
+    grid-column: 1;
+    grid-row: 3;
+    align-items: center;
+  }
+
+  .marketer-hero-grid--no-qa .col-left__intro {
+    flex: none;
+    max-width: 36rem;
+  }
+
+  .marketer-hero-grid--no-qa .col-photo--hero-rail .photo-frame {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .marketer-hero-grid .col-left--body .col-photo .photo-frame {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .col-qa {
+    justify-content: flex-start;
+    max-width: min(100%, 26rem);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .col-left__head .role-line {
+    align-items: center;
+  }
+
+  .col-left__intro {
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
-.col-left .full-name {
+.col-left__head .full-name {
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   text-transform: uppercase;
@@ -953,10 +1154,43 @@ a:hover {
   color: var(--text);
 }
 
-.col-left .role-line {
+.col-left__head .role-line {
+  font-size: 0.9375rem;
+  color: var(--cyan);
+  margin: 0.75rem 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  line-height: 1.35;
+}
+
+.col-left__head .role-line__row {
+  display: block;
+  white-space: nowrap;
+}
+
+.col-left__intro {
+  margin: 0;
+  max-width: 32rem;
   font-size: 0.9375rem;
   color: var(--text-muted);
-  margin: 0.75rem 0 0;
+  line-height: 1.7;
+  text-align: left;
+}
+
+.marketer-hero-grid--no-qa .col-left__intro {
+  flex: 1 1 12rem;
+  min-width: 0;
+  max-width: none;
+}
+
+.col-left__intro--empty {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 0;
+  line-height: 0;
+  overflow: hidden;
 }
 
 .col-photo .photo-frame {
@@ -966,14 +1200,19 @@ a:hover {
   margin-right: auto;
 }
 
-.col-intro {
-  font-size: 0.9375rem;
-  color: var(--text-muted);
-  line-height: 1.7;
+/* Профиль маркетолога: прямоугольнее квадрата; без HTML width/height — только CSS */
+.marketer-hero-grid .photo-frame--hero-profile .hero-img {
+  aspect-ratio: 5 / 6;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: cover;
 }
 
-.col-intro p {
-  margin: 0;
+.marketer-hero-grid .photo-frame--hero-profile .tile-photo-placeholder {
+  aspect-ratio: 5 / 6;
+  width: 100%;
+  height: auto;
 }
 
 /* Quotes carousel */
@@ -1038,10 +1277,11 @@ a:hover {
 }
 
 .bio-block h2 {
-  font-family: var(--font-script);
+  font-family: var(--font-body);
   font-size: 2.25rem;
-  font-weight: 400;
-  color: var(--cyan);
+  font-weight: 600;
+  font-style: normal;
+  color: var(--white);
   margin: 0 0 1rem;
 }
 
@@ -1052,16 +1292,89 @@ a:hover {
   color: var(--text-muted);
 }
 
-/* Sections carousel (arrows) */
+/* Tell us about yourself + темы — журнальное интервью (та же ширина, что карусели) */
+.marketer-story-continuation {
+  max-width: var(--marketer-sections-width);
+  margin: 0 auto 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.75rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.marketer-story-continuation > .marketer-story-kicker,
+.marketer-story-continuation > .story-topic-panel {
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.marketer-story-kicker {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+.story-topic-panel {
+  border: none;
+  padding: 0;
+  background: transparent;
+}
+
+.marketer-story-continuation .story-topic-panel h3 {
+  font-family: var(--font-editorial);
+  font-size: clamp(1.2rem, 2.6vw, 1.45rem);
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  margin: 0 0 1.1rem;
+  color: var(--white);
+}
+
+.story-topic-panel__body {
+  font-family: var(--font-editorial);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.82;
+  color: rgba(255, 255, 255, 0.82);
+  hyphens: auto;
+}
+
+.marketer-story-continuation .story-topic-panel--lead .story-topic-panel__body::first-letter {
+  float: left;
+  margin: 0.06em 0.5rem 0 0;
+  padding: 0.04em 0;
+  font-family: var(--font-editorial);
+  font-size: 3.35rem;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 0.78;
+  color: var(--white);
+}
+
+/* Sections carousel (arrows) — больше воздуха между кругами и карточкой */
 .sections-carousel {
   position: relative;
   margin-bottom: 3rem;
-  padding: 0 3rem;
+  padding: 0 clamp(3.85rem, 5.5vw, 5.5rem);
+}
+
+.marketer-page > .sections-carousel {
+  max-width: var(--marketer-sections-width);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media (max-width: 600px) {
   .sections-carousel {
-    padding: 0 2.5rem;
+    padding: 0 clamp(3.35rem, 10vw, 4.5rem);
   }
 }
 
@@ -1087,27 +1400,134 @@ a:hover {
   line-height: 1.7;
 }
 
+/* QA в интервью — на всю ширину колонки интервью */
+.marketer-story-continuation .sections-carousel--story-qa {
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+}
+
+/* Финальный блок после карусели */
+.marketer-closing-coda.marketer-story-continuation {
+  margin-top: 0;
+}
+
+.marketer-closing-coda__inner {
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+}
+
+/* Как заголовок темы интервью (напр. «Do people still trust influencers?») */
+.marketer-closing-coda.marketer-story-continuation .marketer-closing-coda__lead {
+  margin: 0 auto;
+  padding: 0 1rem;
+  max-width: 36rem;
+  font-family: var(--font-editorial);
+  font-size: clamp(1.2rem, 2.6vw, 1.45rem);
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  color: var(--white);
+  text-align: center;
+}
+
+.marketer-closing-coda.marketer-story-continuation .marketer-closing-coda__lead + .marketer-closing-coda__lead {
+  margin-top: 0.85rem;
+}
+
+/* Кавычки как на About (mission), только вокруг ответа — внизу блока */
+.marketer-closing-coda__answer-quoted {
+  margin: 2rem auto 0;
+  padding: clamp(0.35rem, 1.5vw, 0.65rem) clamp(0.75rem, 3vw, 1.5rem) 0;
+  max-width: 36rem;
+  quotes: none;
+  position: relative;
+}
+
+.marketer-closing-coda__answer-quoted::before,
+.marketer-closing-coda__answer-quoted::after {
+  display: block;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 0.9;
+  color: var(--cyan);
+  opacity: 0.92;
+  width: 100%;
+  text-align: center;
+  pointer-events: none;
+}
+
+.marketer-closing-coda__answer-quoted::before {
+  content: "\201C";
+  margin: 0 auto -0.12em;
+}
+
+.marketer-closing-coda__answer-quoted::after {
+  content: "\201D";
+  margin: -0.08em auto 0;
+}
+
+.marketer-closing-coda__answer-line {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  line-height: 1.45;
+  text-align: center;
+}
+
 .carousel-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   width: 40px;
   height: 40px;
+  padding: 0;
+  margin: 0;
   border: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.12);
   border-radius: 50%;
   cursor: pointer;
-  font-size: 1.25rem;
-  line-height: 1;
+  font-size: 0;
+  line-height: 0;
   color: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.carousel-arrow__icon {
+  display: block;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  margin: 0;
+  overflow: visible;
 }
 
 .carousel-arrow:hover {
-  background: rgba(255, 255, 255, 0.22);
-  color: var(--cyan);
+  color: var(--wine);
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 0 26px rgba(255, 255, 255, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.55);
+}
+
+.carousel-arrow:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.85);
+  outline-offset: 3px;
 }
 
 .carousel-arrow.prev {
@@ -1118,15 +1538,8 @@ a:hover {
   right: 0;
 }
 
-.section-counter {
-  text-align: center;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-top: 0.75rem;
-}
-
-/* QA row */
-.qa-row {
+/* QA row (отдельная строка на других страницах; в герое маркетолога — .qa-row--hero в .col-qa) */
+.qa-row:not(.qa-row--hero) {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.25rem;
@@ -1134,7 +1547,7 @@ a:hover {
 }
 
 @media (max-width: 768px) {
-  .qa-row {
+  .qa-row:not(.qa-row--hero) {
     grid-template-columns: 1fr;
   }
 }
@@ -1577,7 +1990,7 @@ a:hover {
 .mission-heading,
 .tile-name,
 .marketer-kicker,
-.col-left .full-name,
+.col-left__head .full-name,
 .section-panel h3,
 .team-person h3,
 .brand-line,
@@ -1652,8 +2065,8 @@ a:hover {
 }
 
 .tile-role,
-.col-left .role-line,
-.col-intro,
+.col-left__head .role-line,
+.col-left__intro,
 .about-stack .block-text,
 .team-person .comment,
 .form-intro,

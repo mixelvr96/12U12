@@ -1,5 +1,5 @@
 /** Поднимайте число при правках `data/*.json`, иначе браузер может отдавать старый кэш без переносов/текста. */
-const DATA_JSON_VERSION = '3';
+const DATA_JSON_VERSION = '23';
 const MARKETERS_URL = `data/marketers.json?v=${DATA_JSON_VERSION}`;
 const TEAM_URL = `data/team.json?v=${DATA_JSON_VERSION}`;
 
@@ -427,13 +427,127 @@ function initEditionsCarousel(container) {
   apply();
 }
 
+function closingCodaWithEllipsis(text) {
+  const t = String(text).trim();
+  if (!t) return '';
+  if (/\.\.\.\s*$/.test(t)) return t;
+  if (/\u2026\s*$/.test(t)) return t;
+  if (t.endsWith('.')) return `${t.slice(0, -1)}...`;
+  return `${t}...`;
+}
+
+function renderClosingCoda(m) {
+  const c = m.closingCoda;
+  if (!c || !String(c.prompt || '').trim()) return '';
+  const parts = String(c.prompt)
+    .split(/\n\s*\n/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const ansRaw = c.answer != null ? String(c.answer).trim() : '';
+
+  let leadPara = '';
+  let questionPara = '';
+  if (parts.length >= 2) {
+    const questionPart = parts.pop();
+    const leadJoined = parts.join('\n\n');
+    leadPara = `<p class="marketer-closing-coda__lead">${escapeHtml(closingCodaWithEllipsis(leadJoined)).replace(/\n/g, '<br>')}</p>`;
+    questionPara = `<p class="marketer-closing-coda__lead marketer-closing-coda__question-line">${escapeHtml(questionPart).replace(/\n/g, '<br>')}</p>`;
+  } else if (parts.length === 1) {
+    leadPara = `<p class="marketer-closing-coda__lead">${escapeHtml(closingCodaWithEllipsis(parts[0])).replace(/\n/g, '<br>')}</p>`;
+  }
+
+  const answerBlock = ansRaw
+    ? `<div class="marketer-closing-coda__answer-quoted">
+      <p class="marketer-closing-coda__answer-line">${escapeHtml(ansRaw)}</p>
+    </div>`
+    : '';
+
+  return `<section class="marketer-story-continuation marketer-closing-coda" aria-label="Closing question">
+    <div class="marketer-closing-coda__inner">${leadPara}${questionPara}${answerBlock}</div>
+  </section>`;
+}
+
+const SECTION_CAROUSEL_ARROW_PREV = `<button type="button" class="carousel-arrow prev" aria-label="Previous"><svg class="carousel-arrow__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 6L9 12 15 18"/></svg></button>`;
+const SECTION_CAROUSEL_ARROW_NEXT = `<button type="button" class="carousel-arrow next" aria-label="Next"><svg class="carousel-arrow__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 6L15 12 9 18"/></svg></button>`;
+
+function renderEmbeddedStoryQaPanel(m) {
+  const cards = m.qaCards || [];
+  if (!cards.length) return '';
+  const n = cards.length;
+  const slidesHtml = cards
+    .map(
+      (qa, i) => `
+    <div class="section-slide" data-section-index="${i}" style="display:${i === 0 ? 'block' : 'none'}">
+      <div class="section-panel">
+        <h3>${escapeHtml(qa.question)}</h3>
+        <div class="section-body">${escapeHtml(qa.answer).replace(/\n/g, '<br>')}</div>
+      </div>
+    </div>`
+    )
+    .join('');
+  return `
+    <div class="sections-carousel sections-carousel--story-qa" data-sections-count="${n}" role="region" aria-label="Quick answers">
+      ${SECTION_CAROUSEL_ARROW_PREV}
+      <div class="sections-slides">${slidesHtml}</div>
+      ${SECTION_CAROUSEL_ARROW_NEXT}
+    </div>`;
+}
+
+function renderStoryContinuation(m) {
+  const topics = m.storyTopics || [];
+  const bioTitle = escapeHtml(m.bioTitle || 'Tell us about yourself');
+  const bioBody = escapeHtml(m.bio || '').replace(/\n/g, '<br>');
+  const anchor = m.qaCardsStoryAfterTitle && String(m.qaCardsStoryAfterTitle).trim();
+  const hasStoryQa = anchor && (m.qaCards || []).length > 0;
+
+  let storyQaPlaced = false;
+  const topicsHtml = topics
+    .map((t) => {
+      const title = String(t.title || '').trim();
+      const article = `
+    <article class="story-topic-panel">
+      <h3>${escapeHtml(t.title)}</h3>
+      <div class="story-topic-panel__body">${escapeHtml(t.content).replace(/\n/g, '<br>')}</div>
+    </article>`;
+      if (hasStoryQa && title === anchor) {
+        storyQaPlaced = true;
+        return `${article}${renderEmbeddedStoryQaPanel(m)}`;
+      }
+      return article;
+    })
+    .join('');
+
+  const storyQaFallback =
+    hasStoryQa && !storyQaPlaced ? renderEmbeddedStoryQaPanel(m) : '';
+
+  const hasLead = (m.bio && String(m.bio).trim()) || (m.bioTitle && String(m.bioTitle).trim());
+  if (!hasLead && !topicsHtml && !storyQaFallback) return '';
+  const leadPanel = hasLead
+    ? `<article class="story-topic-panel story-topic-panel--lead">
+      <h3>${bioTitle}</h3>
+      <div class="story-topic-panel__body">${bioBody}</div>
+    </article>`
+    : '';
+  return `<section class="marketer-story-continuation" aria-label="Interview">
+      <p class="marketer-story-kicker">Interview</p>
+      ${leadPanel}${topicsHtml}${storyQaFallback}
+    </section>`;
+}
+
 function renderMarketerPage(m) {
   if (!m || m.status !== 'published') {
     return '<p class="error">Профиль недоступен или ещё не опубликован.</p>';
   }
 
   const fullName = `${escapeHtml(m.name)} ${escapeHtml(m.surname)}`;
-  const roleLine = `${escapeHtml(m.role)}${m.company ? ' · ' + escapeHtml(m.company) : ''}`;
+  const roleHtml = (() => {
+    const role = m.role && String(m.role).trim() ? escapeHtml(String(m.role).trim()) : '';
+    const company = m.company && String(m.company).trim() ? escapeHtml(String(m.company).trim()) : '';
+    const rows = [];
+    if (role) rows.push(`<span class="role-line__row">${role}</span>`);
+    if (company) rows.push(`<span class="role-line__row">${company}</span>`);
+    return rows.join('');
+  })();
 
   const quotesHtml = (m.quotes || [])
     .map(
@@ -477,46 +591,78 @@ function renderMarketerPage(m) {
     .join('');
 
   const nSections = (m.sections || []).length;
+  const qaInStory = !!(m.qaCardsStoryAfterTitle && String(m.qaCardsStoryAfterTitle).trim());
+  const hasQaHero = (m.qaCards || []).length > 0 && !qaInStory;
 
   const heroPhoto = m.photo
-    ? `<img class="hero-img" src="${escapeHtml(m.photo)}" alt="" width="600" height="600">`
+    ? `<img class="hero-img" src="${escapeHtml(m.photo)}" alt="" decoding="async">`
     : photoPlaceholder();
+
+  const introHtml = `<p class="col-left__intro${m.intro && String(m.intro).trim() ? '' : ' col-left__intro--empty'}">${m.intro && String(m.intro).trim() ? escapeHtml(m.intro) : ''}</p>`;
+
+  const photoBlock = (extraClass) => `<div class="col-photo${extraClass ? ` ${extraClass}` : ''}">
+            <div class="photo-frame photo-frame--hero-profile">
+              ${heroPhoto}
+            </div>
+          </div>`;
+
+  const heroGridClass = `marketer-hero-grid${hasQaHero ? '' : ' marketer-hero-grid--no-qa'}`;
+
+  const heroBodyNoQa = `<div class="col-left col-left--body">
+          ${introHtml}
+        </div>`;
+
+  const heroBodyWithQa = `<div class="col-left col-left--body">
+          ${introHtml}
+          ${photoBlock('')}
+        </div>`;
+
+  const heroMainNoQa = `
+        <div class="col-left__head">
+          <h1 class="full-name">${fullName}</h1>
+          ${roleHtml ? `<p class="role-line">${roleHtml}</p>` : ''}
+        </div>
+        ${photoBlock('col-photo--hero-rail')}
+        ${heroBodyNoQa}`;
+
+  const heroMainWithQa = `
+        <div class="col-left__head">
+          <h1 class="full-name">${fullName}</h1>
+          ${roleHtml ? `<p class="role-line">${roleHtml}</p>` : ''}
+        </div>
+        ${heroBodyWithQa}`;
 
   return `
     <div class="marketer-page">
-      <div class="marketer-hero-grid">
-        <div class="col-left">
-          <h1 class="full-name">${fullName}</h1>
-          <p class="role-line">${roleLine}</p>
-        </div>
-        <div class="col-photo">
-          <div class="photo-frame">
-            ${heroPhoto}
-          </div>
-        </div>
-        <div class="col-intro">
-          <p>${escapeHtml(m.intro)}</p>
-        </div>
+      <div class="${heroGridClass}">
+        ${hasQaHero ? heroMainWithQa : heroMainNoQa}
+        ${
+          hasQaHero
+            ? `<div class="col-qa">
+          <div class="qa-row qa-row--hero">${qaHtml}</div>
+        </div>`
+            : ''
+        }
       </div>
 
-      <div class="quotes-block" data-quotes-count="${(m.quotes || []).length}">
-        ${quotesHtml}
-        <div class="quote-dots">${dotsHtml}</div>
-      </div>
-
-      <section class="bio-block">
-        <h2>${escapeHtml(m.bioTitle || 'Tell us about yourself')}</h2>
-        <div class="bio-text">${escapeHtml(m.bio || '').replace(/\n/g, '<br>')}</div>
-      </section>
+      ${renderStoryContinuation(m)}
 
       <div class="sections-carousel" data-sections-count="${nSections}">
-        <button type="button" class="carousel-arrow prev" aria-label="Previous">‹</button>
+        ${SECTION_CAROUSEL_ARROW_PREV}
         <div class="sections-slides">${sectionsHtml}</div>
-        <button type="button" class="carousel-arrow next" aria-label="Next">›</button>
-        <p class="section-counter"><span class="section-cur">1</span> / <span class="section-total">${nSections}</span></p>
+        ${SECTION_CAROUSEL_ARROW_NEXT}
       </div>
 
-      <div class="qa-row">${qaHtml}</div>
+      ${renderClosingCoda(m)}
+
+      ${
+        (m.quotes || []).length > 0
+          ? `<div class="quotes-block" data-quotes-count="${(m.quotes || []).length}">
+        ${quotesHtml}
+        <div class="quote-dots">${dotsHtml}</div>
+      </div>`
+          : ''
+      }
     </div>`;
 }
 
@@ -546,24 +692,41 @@ function initSectionCarousel(root) {
   const slides = root.querySelectorAll('.section-slide');
   const prev = root.querySelector('.carousel-arrow.prev');
   const next = root.querySelector('.carousel-arrow.next');
-  const curEl = root.querySelector('.section-cur');
-  const totalEl = root.querySelector('.section-total');
   if (!slides.length) return;
 
   let cur = 0;
   const total = slides.length;
-  if (totalEl) totalEl.textContent = String(total);
 
   function show(i) {
     cur = (i + total) % total;
     slides.forEach((s, j) => {
       s.style.display = j === cur ? 'block' : 'none';
     });
-    if (curEl) curEl.textContent = String(cur + 1);
   }
 
-  prev.addEventListener('click', () => show(cur - 1));
-  next.addEventListener('click', () => show(cur + 1));
+  if (prev) prev.addEventListener('click', () => show(cur - 1));
+  if (next) next.addEventListener('click', () => show(cur + 1));
+
+  let touchStartX = null;
+  root.addEventListener(
+    'touchstart',
+    (e) => {
+      if (e.changedTouches.length === 1) touchStartX = e.changedTouches[0].clientX;
+    },
+    { passive: true }
+  );
+  root.addEventListener(
+    'touchend',
+    (e) => {
+      if (touchStartX == null || e.changedTouches.length !== 1) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      touchStartX = null;
+      if (Math.abs(dx) < 48) return;
+      if (dx > 0) show(cur - 1);
+      else show(cur + 1);
+    },
+    { passive: true }
+  );
 }
 
 function renderTeamPage(data) {
@@ -661,8 +824,7 @@ document.addEventListener('DOMContentLoaded', () => {
         marketerRoot.innerHTML = renderMarketerPage(m);
         const quotesBlock = marketerRoot.querySelector('.quotes-block');
         if (quotesBlock) initQuoteCarousel(quotesBlock);
-        const secCar = marketerRoot.querySelector('.sections-carousel');
-        if (secCar) initSectionCarousel(secCar);
+        marketerRoot.querySelectorAll('.sections-carousel').forEach((car) => initSectionCarousel(car));
       })
       .catch(() => {
         marketerRoot.innerHTML = '<p class="error">Ошибка загрузки.</p>';
