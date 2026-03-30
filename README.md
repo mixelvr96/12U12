@@ -11,6 +11,22 @@ python3 -m http.server 8080
 
 Откройте http://localhost:8080 (нужен сервер из‑за `fetch` к JSON).
 
+## Git и GitHub (PAT из `.env`)
+
+Токен храните в **`GITHUB_PAT`** в файле **`.env`** в каталоге проекта `oup/` или на уровень выше (например `Desktop/.env`). Шаблон: **`.env.example`**. Файл `.env` в репозиторий не попадает.
+
+Пуш с подстановкой токена из окружения (текущая ветка):
+
+```bash
+./scripts/push-with-pat.sh
+```
+
+Опционально — те же аргументы, что у `git push` после URL (например `HEAD:main`).
+
+```bash
+./scripts/push-with-pat.sh HEAD:main
+```
+
 ## Pre-launch
 
 - **`coming-soon.html`** — страница-заглушка (одна иллюстрация).

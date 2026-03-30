@@ -71,14 +71,101 @@ a:hover {
   text-align: center;
 }
 
+/* Главная: строка бренда; ниже слоган | 12 UNDER 12 | подзаголовок — одна строка (на мобиле столбиком) */
+.site-header .wrap.site-header__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: clamp(0.65rem, 1.5vw, 1rem);
+  text-align: center;
+}
+
+.site-header__brand-row {
+  width: 100%;
+}
+
+.site-header__brand-row .brand-line {
+  margin: 0;
+}
+
+.site-header__hero-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, min(100%, 36rem)) minmax(0, 1fr);
+  align-items: center;
+  column-gap: 1.25rem;
+  width: 100%;
+}
+
+.site-header__tagline,
+.site-header__year {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(0.6875rem, 1.65vw, 0.8125rem);
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.site-header__tagline {
+  grid-column: 1;
+  place-self: center;
+  max-width: min(18rem, 100%);
+}
+
+.site-header .site-header__hero-row .site-title {
+  grid-column: 2;
+  margin: 0;
+  justify-self: center;
+  width: 100%;
+}
+
+.site-header__year {
+  grid-column: 3;
+  place-self: center;
+  max-width: min(22rem, 100%);
+}
+
+@media (max-width: 720px) {
+  .site-header__hero-row {
+    grid-template-columns: 1fr;
+    align-items: start;
+    row-gap: 0.65rem;
+  }
+
+  .site-header__tagline,
+  .site-header__year {
+    grid-column: 1;
+    place-self: center;
+    max-width: min(22rem, 100%);
+  }
+
+  .site-header .site-header__hero-row .site-title {
+    grid-column: 1;
+  }
+}
+
 .brand-line {
   font-family: var(--font-body);
   font-size: 0.8125rem;
-  font-weight: 600;
+  font-weight: 400;
+  font-style: normal;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text-muted);
   margin: 0 0 1.5rem;
+}
+
+.brand-line__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand-line__link:hover {
+  color: var(--cyan);
 }
 
 .site-title {
@@ -242,30 +329,6 @@ a:hover {
     grid-column: 1;
     justify-content: center;
   }
-}
-
-/* —— Hero —— */
-.hero {
-  text-align: center;
-  margin: clamp(1.5rem, 4.5vw, 2.75rem) auto 0;
-  padding: 1.35rem 0 1.75rem;
-  max-width: 720px;
-}
-
-.hero .lead {
-  margin: 0;
-  font-size: clamp(1.05rem, 2.35vw, 1.3rem);
-  font-weight: 300;
-  font-style: italic;
-  color: rgba(255, 255, 255, 0.92);
-  line-height: 1.65;
-  white-space: pre-line;
-}
-
-.hero .lead .hero-title-phrase {
-  font-style: italic;
-  font-weight: 600;
-  color: var(--white);
 }
 
 /* —— Editions carousel (главная) —— */
@@ -1623,9 +1686,10 @@ a:hover {
 
 /* —— Forbes quote: на главной сразу после ленты полароидов, перед блоком партнёров —— */
 .home-forbes-quote {
-  max-width: 40rem;
-  margin: 0 auto;
-  padding: clamp(0.75rem, 2.5vh, 1.5rem) 1.5rem clamp(1rem, 3vh, 2rem);
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: clamp(0.75rem, 2.5vh, 1.5rem) 0 clamp(1rem, 3vh, 2rem);
   box-sizing: border-box;
 }
 
@@ -1648,7 +1712,7 @@ a:hover {
 }
 
 #home-grid-container > .home-forbes-quote {
-  margin-top: clamp(4.25rem, 12vh, 7.5rem);
+  margin-top: clamp(5.75rem, 16vh, 10.5rem);
 }
 
 #home-grid-container > .home-forbes-quote + .home-forbes-quote {
@@ -1671,6 +1735,7 @@ a:hover {
   line-height: 1.65;
   color: var(--white);
   letter-spacing: 0.01em;
+  text-wrap: pretty;
 }
 
 .home-forbes-quote__src {
@@ -1680,7 +1745,7 @@ a:hover {
   font-style: normal;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--cyan);
 }
 
 .home-forbes-quote__src::before {
@@ -1705,7 +1770,7 @@ a:hover {
 }
 
 #home-grid-container {
-  margin-top: clamp(2.25rem, 5.5vw, 4rem);
+  margin-top: clamp(1.25rem, 3.25vw, 2.5rem);
 }
 
 .polaroid-sticky-viewport {
@@ -1718,16 +1783,16 @@ a:hover {
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  padding-top: clamp(1.25rem, 5vh, 3rem);
+  padding-top: clamp(0.6rem, 2.5vh, 1.75rem);
   box-sizing: border-box;
 }
 
 .polaroid-track {
   display: grid;
-  grid-template-columns: repeat(3, max-content) max-content;
+  grid-template-columns: repeat(6, max-content);
   grid-template-rows: auto auto;
   grid-auto-flow: row;
-  column-gap: clamp(1.25rem, 4vw, 2.75rem);
+  column-gap: clamp(1.15rem, 3.8vw, 2.85rem);
   row-gap: clamp(0.85rem, 2.5vh, 1.75rem);
   align-items: center;
   flex: 0 0 auto;
@@ -1737,16 +1802,9 @@ a:hover {
   will-change: transform;
 }
 
-.polaroid-card--soon-aside {
-  grid-column: 4;
-  grid-row: 1 / -1;
-  justify-self: center;
-  align-self: center;
-}
-
 .polaroid-card {
   flex: 0 0 auto;
-  width: clamp(200px, 28vw, 280px);
+  width: clamp(210px, 26vw, 300px);
   position: relative;
   z-index: 0;
   transition:
@@ -1754,28 +1812,52 @@ a:hover {
     z-index 0s linear 0s;
 }
 
-.polaroid-tilt--1:not(.polaroid-card--text-soon) {
+.polaroid-tilt--1 {
   transform: rotate(-2.4deg);
 }
 
-.polaroid-tilt--2:not(.polaroid-card--text-soon) {
+.polaroid-tilt--2 {
   transform: rotate(1.1deg);
 }
 
-.polaroid-tilt--3:not(.polaroid-card--text-soon) {
+.polaroid-tilt--3 {
   transform: rotate(-0.6deg);
 }
 
-.polaroid-tilt--4:not(.polaroid-card--text-soon) {
+.polaroid-tilt--4 {
   transform: rotate(2deg);
 }
 
-.polaroid-tilt--5:not(.polaroid-card--text-soon) {
+.polaroid-tilt--5 {
   transform: rotate(-1.2deg);
 }
 
-.polaroid-tilt--6:not(.polaroid-card--text-soon) {
+.polaroid-tilt--6 {
   transform: rotate(0.9deg);
+}
+
+.polaroid-tilt--7 {
+  transform: rotate(-1.5deg);
+}
+
+.polaroid-tilt--8 {
+  transform: rotate(1.3deg);
+}
+
+.polaroid-tilt--9 {
+  transform: rotate(-0.8deg);
+}
+
+.polaroid-tilt--10 {
+  transform: rotate(1.8deg);
+}
+
+.polaroid-tilt--11 {
+  transform: rotate(-1.1deg);
+}
+
+.polaroid-tilt--12 {
+  transform: rotate(0.7deg);
 }
 
 .polaroid-card--vacant .polaroid-photo-area--vacant {
@@ -1825,8 +1907,8 @@ a:hover {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 0.5rem 0.5rem 0.4rem;
-  padding-bottom: 1.85rem;
+  padding: 0.58rem 0.58rem 0.45rem;
+  padding-bottom: 2rem;
   border: 1px solid var(--border);
   background: transparent;
   box-shadow:
@@ -1847,9 +1929,22 @@ a:hover {
   border: 2px solid var(--border);
   background: transparent;
   line-height: 0;
+  overflow: hidden;
+}
+
+.polaroid-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: 0;
 }
 
 .polaroid-read-pill {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1873,30 +1968,32 @@ a:hover {
 
 .polaroid-read-pill__text {
   font-family: var(--font-body);
-  font-size: clamp(0.45rem, 1.15vw, 0.65rem);
+  font-size: clamp(0.5rem, 1.3vw, 0.72rem);
   font-weight: 600;
   font-style: italic;
   letter-spacing: 0.1em;
   text-transform: none;
   color: var(--white);
   line-height: 1.2;
+  transition: color 0.2s ease;
 }
 
+/* При наведении — как у .nav-pills a:hover */
 .polaroid-card:has(.polaroid-link:hover) .polaroid-read-pill,
 .polaroid-card:has(.polaroid-link:focus-visible) .polaroid-read-pill {
   opacity: 1;
   visibility: visible;
   transform: scale(1);
   border-color: rgba(255, 255, 255, 0.55);
-  background: rgba(0, 0, 0, 0.35);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 0 26px rgba(255, 255, 255, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.55);
 }
 
-.polaroid-card--lead:has(.polaroid-link:hover) .polaroid-read-pill,
-.polaroid-card--lead:has(.polaroid-link:focus-visible) .polaroid-read-pill {
-  border-color: var(--wine-hover);
-  background: rgba(95, 4, 13, 0.2);
-  box-shadow: 0 0 0 1px rgba(95, 4, 13, 0.35);
+.polaroid-card:has(.polaroid-link:hover) .polaroid-read-pill__text,
+.polaroid-card:has(.polaroid-link:focus-visible) .polaroid-read-pill__text {
+  color: var(--wine);
 }
 
 .polaroid-caption {
@@ -1904,7 +2001,7 @@ a:hover {
   margin-top: 0.75rem;
   padding: 0 0.1rem;
   font-family: var(--font-body);
-  font-size: clamp(0.52rem, 1.35vw, 0.75rem);
+  font-size: clamp(0.58rem, 1.55vw, 0.86rem);
   font-weight: 600;
   font-style: normal;
   letter-spacing: 0.04em;
@@ -1950,40 +2047,23 @@ a:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .polaroid-tilt--1:not(.polaroid-card--text-soon),
-  .polaroid-tilt--2:not(.polaroid-card--text-soon),
-  .polaroid-tilt--3:not(.polaroid-card--text-soon),
-  .polaroid-tilt--4:not(.polaroid-card--text-soon),
-  .polaroid-tilt--5:not(.polaroid-card--text-soon),
-  .polaroid-tilt--6:not(.polaroid-card--text-soon),
-  .polaroid-card--vacant,
-  .polaroid-card--text-soon {
+  .polaroid-tilt--1,
+  .polaroid-tilt--2,
+  .polaroid-tilt--3,
+  .polaroid-tilt--4,
+  .polaroid-tilt--5,
+  .polaroid-tilt--6,
+  .polaroid-tilt--7,
+  .polaroid-tilt--8,
+  .polaroid-tilt--9,
+  .polaroid-tilt--10,
+  .polaroid-tilt--11,
+  .polaroid-tilt--12,
+  .polaroid-card--vacant {
     transform: none;
   }
 
   .polaroid-card:has(.polaroid-link:hover) .polaroid-read-pill {
     transform: none;
   }
-}
-
-/* Слот «Coming soon …» в правой колонке сетки */
-.polaroid-card--text-soon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-self: center;
-  min-height: min(55vw, 320px);
-  transform: rotate(-1deg);
-}
-
-.polaroid-soon-inline {
-  margin: 0;
-  padding: 0 0.25rem;
-  font-style: italic;
-  font-size: clamp(0.95rem, 2.6vw, 1.2rem);
-  color: var(--text-muted);
-  letter-spacing: 0.03em;
-  line-height: 1.35;
-  text-align: center;
-  max-width: 11em;
 }

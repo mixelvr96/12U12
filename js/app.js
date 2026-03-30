@@ -1,5 +1,7 @@
-const MARKETERS_URL = 'data/marketers.json';
-const TEAM_URL = 'data/team.json';
+/** Поднимайте число при правках `data/*.json`, иначе браузер может отдавать старый кэш без переносов/текста. */
+const DATA_JSON_VERSION = '3';
+const MARKETERS_URL = `data/marketers.json?v=${DATA_JSON_VERSION}`;
+const TEAM_URL = `data/team.json?v=${DATA_JSON_VERSION}`;
 
 async function loadMarketers() {
   const res = await fetch(MARKETERS_URL);
@@ -18,22 +20,6 @@ function escapeHtml(str) {
   const div = document.createElement('div');
   div.textContent = str;
   return div.innerHTML;
-}
-
-function renderHeroDescription(hero) {
-  if (!hero) return '';
-  if (typeof hero === 'string') {
-    return escapeHtml(hero).replace(/\n/g, '<br>');
-  }
-  if (hero.title != null && typeof hero.body === 'string') {
-    return (
-      '<em class="hero-title-phrase">' +
-      escapeHtml(hero.title) +
-      '</em>' +
-      escapeHtml(hero.body).replace(/\n/g, '<br>')
-    );
-  }
-  return '';
 }
 
 function getInterviewIdFromUrl() {
@@ -97,16 +83,23 @@ function renderPolaroidCard(m, tiltIndex) {
   const capHtml = renderPolaroidCaptionHtml(m);
   const isPub = m.status === 'published';
   const tiltCls =
-    tiltIndex >= 1 && tiltIndex <= 6 ? ` polaroid-tilt--${tiltIndex}` : '';
+    tiltIndex >= 1 && tiltIndex <= 12 ? ` polaroid-tilt--${tiltIndex}` : '';
   const isLead = isPub && Number(m.id) === 1;
   const readPill = isLead
     ? `<span class="polaroid-read-pill"><span class="polaroid-read-pill__text">read</span></span>`
     : '';
   const leadCls = isLead ? ' polaroid-card--lead' : '';
 
+  const photoAlt = [m.name, m.surname].filter(Boolean).join(' ').trim();
+  const photoHtml =
+    isPub && m.photo
+      ? `<img class="polaroid-photo" src="${escapeHtml(m.photo)}" alt="${escapeHtml(photoAlt || 'Marketer photo')}" loading="lazy" width="300" height="300">`
+      : '';
+
   const inner = `
     <div class="polaroid-frame">
       <div class="polaroid-photo-area">
+        ${photoHtml}
         ${readPill}
       </div>
       <p class="polaroid-caption">${capHtml}</p>
@@ -249,48 +242,57 @@ function renderWhyTwelveBlock(data) {
 }
 
 function renderHomeForbesQuote() {
-  const line1 = 'Influencer marketers are no longer just campaign managers –';
-  const line2 = 'they are brand relationship architects';
+  const text =
+    'Influencer marketers are no longer just campaign managers – they are brand relationship architects.';
   return `
     <section class="home-forbes-quote home-forbes-quote--left" aria-label="Quote from Forbes">
       <blockquote class="home-forbes-quote__inner" cite="https://www.forbes.com/">
-        <p>${escapeHtml(line1)}<br>${escapeHtml(line2)}</p>
+        <p>${escapeHtml(text)}</p>
         <footer class="home-forbes-quote__src">Forbes</footer>
       </blockquote>
     </section>`;
 }
 
 function renderHomeBusinessInsiderQuote() {
-  const line1 = 'The job has evolved into managing talent, data,';
-  const line2 = 'and brand safety all at once';
+  const text = 'The job has evolved into managing talent, data, and brand safety all at once.';
   return `
-    <section class="home-forbes-quote home-forbes-quote--right" aria-label="Quote from Business Insider">
+    <section class="home-forbes-quote home-forbes-quote--left" aria-label="Quote from Business Insider">
       <blockquote class="home-forbes-quote__inner" cite="https://www.businessinsider.com/">
-        <p>${escapeHtml(line1)}<br>${escapeHtml(line2)}</p>
+        <p>${escapeHtml(text)}</p>
         <footer class="home-forbes-quote__src">Business Insider</footer>
       </blockquote>
     </section>`;
 }
 
-/** Слот «Coming soon …» — справа в сетке, курсив, без рамки полароида */
-function renderPolaroidSoonSlot() {
+function renderHomeGuardianQuote() {
+  const text =
+    'For marketers, working with influencers means navigating authenticity, transparency, and risk.';
   return `
-    <article class="polaroid-card polaroid-card--text-soon polaroid-card--soon-aside" aria-label="Coming soon">
-      <p class="polaroid-soon-inline">Coming soon …</p>
-    </article>`;
+    <section class="home-forbes-quote home-forbes-quote--left" aria-label="Quote from The Guardian">
+      <blockquote class="home-forbes-quote__inner" cite="https://www.theguardian.com/">
+        <p>${escapeHtml(text)}</p>
+        <footer class="home-forbes-quote__src">The Guardian</footer>
+      </blockquote>
+    </section>`;
 }
 
-/** Месяцы пустых ячеек: 1-й ряд — апр–июн (выпуски 01–03), 2-й — июль–сен (выпуски 04–06) */
+/** Пустые ячейки: 1-й ряд — 01–06 (апр–сен), 2-й — 07–12 (окт–мар) */
 const POLAROID_VACANT_SLOT_MONTHS = [
   [
     { num: '01', month: 'APRIL' },
     { num: '02', month: 'MAY' },
     { num: '03', month: 'JUNE' },
-  ],
-  [
     { num: '04', month: 'JULY' },
     { num: '05', month: 'AUGUST' },
     { num: '06', month: 'SEPTEMBER' },
+  ],
+  [
+    { num: '07', month: 'OCTOBER' },
+    { num: '08', month: 'NOVEMBER' },
+    { num: '09', month: 'DECEMBER' },
+    { num: '10', month: 'JANUARY' },
+    { num: '11', month: 'FEBRUARY' },
+    { num: '12', month: 'MARCH' },
   ],
 ];
 
@@ -304,7 +306,7 @@ function renderPolaroidVacantCaptionHtml(rowIdx, colIdx) {
 /** Пустой слот (рамка полароида + подпись месяца) */
 function renderPolaroidVacantSlot(tiltIndex, rowIdx, colIdx) {
   const tiltCls =
-    tiltIndex >= 1 && tiltIndex <= 6 ? ` polaroid-tilt--${tiltIndex}` : '';
+    tiltIndex >= 1 && tiltIndex <= 12 ? ` polaroid-tilt--${tiltIndex}` : '';
   const spec = POLAROID_VACANT_SLOT_MONTHS[rowIdx]?.[colIdx];
   const capHtml = renderPolaroidVacantCaptionHtml(rowIdx, colIdx);
   const ariaMonth = spec
@@ -320,12 +322,12 @@ function renderPolaroidVacantSlot(tiltIndex, rowIdx, colIdx) {
     </article>`;
 }
 
-/** Сетка 2×3 (три месяца сверху, три следующих снизу) + колонка «Coming soon» справа; общий горизонтальный скролл */
+/** Сетка 2×6: сверху 01–06 (апр–сен), снизу 07–12 (окт–мар); вертикальный скролл двигает ленту влево */
 function renderPolaroidGridHtml(marketers) {
-  const top = [...marketers.slice(0, 3)];
-  const bottom = [...marketers.slice(3, 6)];
-  while (top.length < 3) top.push(null);
-  while (bottom.length < 3) bottom.push(null);
+  const top = [...marketers.slice(0, 6)];
+  const bottom = [...marketers.slice(6, 12)];
+  while (top.length < 6) top.push(null);
+  while (bottom.length < 6) bottom.push(null);
 
   let tilt = 0;
   const cell = (m, rowIdx, colIdx) => {
@@ -334,7 +336,7 @@ function renderPolaroidGridHtml(marketers) {
     return renderPolaroidCard(m, tilt);
   };
 
-  return `${top.map((m, i) => cell(m, 0, i)).join('')}${bottom.map((m, i) => cell(m, 1, i)).join('')}${renderPolaroidSoonSlot()}`;
+  return `${top.map((m, i) => cell(m, 0, i)).join('')}${bottom.map((m, i) => cell(m, 1, i)).join('')}`;
 }
 
 function renderHomeGrid(data) {
@@ -348,7 +350,7 @@ function renderHomeGrid(data) {
         ${renderPolaroidGridHtml(marketers)}
       </div>
     </div>
-  </section>${renderHomeForbesQuote()}${renderHomeBusinessInsiderQuote()}`;
+  </section>${renderHomeForbesQuote()}${renderHomeBusinessInsiderQuote()}${renderHomeGuardianQuote()}`;
 }
 
 function initPolaroidScroll(driver) {
@@ -482,9 +484,6 @@ function renderMarketerPage(m) {
 
   return `
     <div class="marketer-page">
-      <p class="marketer-kicker">12 UNDER 12</p>
-      <a href="index.html" class="btn-back">← Back</a>
-
       <div class="marketer-hero-grid">
         <div class="col-left">
           <h1 class="full-name">${fullName}</h1>
@@ -518,8 +517,6 @@ function renderMarketerPage(m) {
       </div>
 
       <div class="qa-row">${qaHtml}</div>
-
-      <a href="index.html" class="btn-back bottom">← Back</a>
     </div>`;
 }
 
@@ -637,13 +634,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (homeGrid) {
     loadMarketers()
       .then((data) => {
-        const hl = document.getElementById('hero-lead');
-        if (hl && data.heroDescription) hl.innerHTML = renderHeroDescription(data.heroDescription);
         homeGrid.innerHTML = renderHomeGrid(data);
         const polaroidDriver = homeGrid.querySelector('[data-polaroid-scroll]');
-        const nSlots = ((data.marketers && data.marketers.length) || 1) + 1;
+        const nMarketers = (data.marketers && data.marketers.length) || 12;
         if (polaroidDriver) {
-          polaroidDriver.style.height = `${Math.round(90 + nSlots * 20)}vh`;
+          polaroidDriver.style.height = `${Math.round(95 + Math.min(nMarketers, 12) * 22)}vh`;
         }
         initPolaroidScroll(polaroidDriver);
         queueMicrotask(() => scrollToHashInDocument());
