@@ -3,7 +3,12 @@
     return;
   }
   var path = window.location.pathname || '';
-  if (/coming-soon\.html$/i.test(path) || /\/coming-soon\/?$/i.test(path)) {
+  if (
+    /coming-soon\.html$/i.test(path) ||
+    /\/coming-soon\/?$/i.test(path) ||
+    /become-one\.html$/i.test(path) ||
+    /\/become-one\/?$/i.test(path)
+  ) {
     return;
   }
   window.location.replace('coming-soon.html' + window.location.search + window.location.hash);
