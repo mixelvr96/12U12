@@ -29,8 +29,8 @@ python3 -m http.server 8080
 
 ## Pre-launch
 
-- **`coming-soon.html`** — страница-заглушка (одна иллюстрация).
-- **`js/config.js`** — `PRELAUNCH_COMING_SOON`: `true` на проде до открытия редиректит с `index.html` на заглушку; для наполнения держите `false`.
+- **`coming-soon.html`** — страница-заглушка (одна иллюстрация). Прямой URL: `…/coming-soon.html` (на GitHub Pages это обычно `https://<user>.github.io/<repo>/coming-soon.html`).
+- **`js/config.js`** — `PRELAUNCH_COMING_SOON`: при `true` все страницы, кроме `coming-soon.html`, сразу редиректят на заглушку (`js/prelaunch-redirect.js`). Для наполнения и превью сайта держите `false`.
 
 ## Структура
 

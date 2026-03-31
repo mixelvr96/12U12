@@ -1,5 +1,5 @@
 /**
- * Pre-launch: на проде до открытия поставьте true — с главной будет редирект на coming-soon.html.
- * Локально при наполнении контента держите false.
+ * Pre-launch: на проде до открытия поставьте true — любая страница кроме coming-soon.html
+ * уйдёт на заглушку (см. js/prelaunch-redirect.js). Локально при наполнении держите false.
  */
 window.PRELAUNCH_COMING_SOON = false;
