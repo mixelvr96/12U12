@@ -7,7 +7,7 @@
   },
   "aboutIntro": {
     "paragraphs": [
-      "12 UNDER 12 is a collaborative project by Zorka.Agency and Influencer Marketing Hub, created to spotlight the people behind the industry. As Zorka.Agency marks 12 years in influencer marketing, we chose to celebrate this milestone by giving the stage to others. The concept is simple: 12 months, 12 marketers who have made a real impact on the industry.",
+      "12 UNDER 12 is a collaborative project by Zorka.Agency and Influencer Marketing Hub, created to spotlight the people behind the industry.",
       "We launched this project because influencer marketing still lacks platforms where professionals can openly share their honest experiences, challenges, and perspectives beyond brand narratives. Too often, the focus is on campaigns and results — not on the people making it all happen.",
       "12 UNDER 12 changes that by creating a space for marketers to speak openly, share real insights, and shape the conversation around the industry today."
     ]
@@ -23,6 +23,14 @@
       "polaroidMonth": "APRIL",
       "photo": "images/marketers/01.jpg",
       "intro": "Alyona builds influencer programs that balance long-term brand reputation with measurable business outcomes across global and local markets.",
+      "funFacts": {
+        "title": "Fun Facts",
+        "items": [
+          "Started in performance marketing before moving full-time into creator partnerships.",
+          "Keeps a running list of half-baked campaign ideas—most never make it to a deck.",
+          "Once aligned a brief across three time zones in a single afternoon."
+        ]
+      },
       "quotes": [],
       "bioTitle": "Tell us about yourself",
       "bio": "I came up through performance marketing, but I crossed into influencer work the moment it sank in that trust is built in comments and DMs—not only in paid placements. Since then, I've split my time between scrappy teams and big brands, always chasing the same thing: programs that compound instead of resetting every quarter.\n\nFor this series I'm opening the notebook—early mistakes, what changed once we actually listened to creators, and the frameworks that keep partnerships from unraveling after the first brief.",

@@ -16,22 +16,31 @@
 
     main {
       margin: 0;
-      padding: 0;
+      padding: clamp(2.25rem, 7vh, 5rem) 1rem clamp(2rem, 5vw, 3rem);
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      box-sizing: border-box;
     }
 
     /* Обёртка: поверх картинки — круглая зона «Join our newsletter» на сургуче */
     .coming-soon-wrap {
       position: relative;
-      width: 100%;
-      max-width: 1242px;
+      width: fit-content;
+      max-width: min(98vw, 1000px);
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .coming-soon-art {
       display: block;
-      width: 100%;
+      width: auto;
+      max-width: 100%;
       height: auto;
+      max-height: min(98vh, 1480px);
+      margin: 0 auto;
     }
 
     .newsletter-seal {
@@ -79,7 +88,7 @@
   <main>
     <h1 class="visually-hidden">Zorka.Agency × Influencer Marketing Hub — coming soon. Stay tuned.</h1>
     <div class="coming-soon-wrap">
-      <img class="coming-soon-art" src="images/coming-soon.png?v=19" alt="Zorka.Agency × Influencer Marketing Hub. Coming soon. Stay tuned. Join our newsletter on the wax seal." width="1242" height="2688">
+      <img class="coming-soon-art" src="images/coming-soon.png?v=24" alt="Zorka.Agency × Influencer Marketing Hub. Coming soon. Stay tuned. Join our newsletter on the wax seal." width="1242" height="2688">
       <a
         class="newsletter-seal"
         href="mailto:info@zorka.agency?subject=12%20UNDER%2012%20%E2%80%94%20Newsletter&amp;body=Please%20subscribe%20me%20to%20the%20email%20newsletter.%0A%0AMy%20email%3A%20"

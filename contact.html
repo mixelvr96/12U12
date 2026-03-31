@@ -7,9 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Great+Vibes&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=brand-line-links">
+  <link rel="stylesheet" href="css/style.css?v=contact-nav-front-1">
 </head>
-<body>
+<body class="contact-page">
   <header class="site-header">
     <div class="wrap">
       <p class="brand-line">
@@ -32,23 +32,24 @@
   <main>
     <h1 class="page-title">Contact us</h1>
 
-    <div class="form-page">
-      <form id="form-contact" novalidate>
-        <div class="form-group">
-          <label for="contact-name">Full Name</label>
-          <input type="text" id="contact-name" name="Full Name" required autocomplete="name">
-        </div>
-        <div class="form-group">
-          <label for="contact-email">Email</label>
-          <input type="email" id="contact-email" name="Email" required autocomplete="email">
-        </div>
-        <div class="form-group">
-          <label for="contact-help">How can we help you?</label>
-          <textarea id="contact-help" name="How can we help you?" required></textarea>
-        </div>
-        <button type="submit" class="btn-submit">Send</button>
-      </form>
-
+    <div class="form-page contact-form-envelope">
+      <div class="contact-form-envelope__panel">
+        <form id="form-contact" novalidate>
+          <div class="form-group">
+            <label for="contact-name">Full Name</label>
+            <input type="text" id="contact-name" name="Full Name" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="contact-email">Email</label>
+            <input type="email" id="contact-email" name="Email" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="contact-help">How can we help you?</label>
+            <textarea id="contact-help" name="How can we help you?" required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Send</button>
+        </form>
+      </div>
     </div>
 
     <nav class="partner-links" aria-label="Project partners">
@@ -62,6 +63,6 @@
   </main>
 
   <script src="js/app.js?v=site-title-cycle"></script>
-  <script src="js/forms.js"></script>
+  <script src="js/forms.js?v=forms-ajax-send"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 /** Поднимайте число при правках `data/*.json`, иначе браузер может отдавать старый кэш без переносов/текста. */
-const DATA_JSON_VERSION = '23';
+const DATA_JSON_VERSION = '26';
 const MARKETERS_URL = `data/marketers.json?v=${DATA_JSON_VERSION}`;
 const TEAM_URL = `data/team.json?v=${DATA_JSON_VERSION}`;
 
@@ -37,6 +37,24 @@ function photoPlaceholder() {
             <div class="tile-photo-placeholder">
               <span class="tile-photo-placeholder__soon">—</span>
             </div>`;
+}
+
+function renderFunFactsBlock(m) {
+  const raw = m.funFacts;
+  if (!raw) return '';
+  const items = Array.isArray(raw.items) ? raw.items : Array.isArray(raw) ? raw : [];
+  const clean = items.map((x) => String(x || '').trim()).filter(Boolean).slice(0, 3);
+  if (!clean.length) return '';
+  const titleRaw =
+    raw && typeof raw === 'object' && !Array.isArray(raw) && raw.title != null
+      ? String(raw.title).trim()
+      : 'Fun Facts';
+  const title = escapeHtml(titleRaw || 'Fun Facts');
+  const list = clean.map((f) => `<li class="marketer-fun-facts__item">${escapeHtml(f)}</li>`).join('');
+  return `<aside class="marketer-fun-facts" aria-label="${title}">
+    <h2 class="marketer-fun-facts__title">${title}</h2>
+    <ol class="marketer-fun-facts__list">${list}</ol>
+  </aside>`;
 }
 
 function polaroidMonthLine(m) {
@@ -608,12 +626,9 @@ function renderMarketerPage(m) {
 
   const heroGridClass = `marketer-hero-grid${hasQaHero ? '' : ' marketer-hero-grid--no-qa'}`;
 
-  const heroBodyNoQa = `<div class="col-left col-left--body">
-          ${introHtml}
-        </div>`;
+  const funFactsHtml = renderFunFactsBlock(m);
 
   const heroBodyWithQa = `<div class="col-left col-left--body">
-          ${introHtml}
           ${photoBlock('')}
         </div>`;
 
@@ -621,14 +636,17 @@ function renderMarketerPage(m) {
         <div class="col-left__head">
           <h1 class="full-name">${fullName}</h1>
           ${roleHtml ? `<p class="role-line">${roleHtml}</p>` : ''}
+          ${introHtml}
+          ${funFactsHtml}
         </div>
-        ${photoBlock('col-photo--hero-rail')}
-        ${heroBodyNoQa}`;
+        ${photoBlock('col-photo--hero-rail')}`;
 
   const heroMainWithQa = `
         <div class="col-left__head">
           <h1 class="full-name">${fullName}</h1>
           ${roleHtml ? `<p class="role-line">${roleHtml}</p>` : ''}
+          ${introHtml}
+          ${funFactsHtml}
         </div>
         ${heroBodyWithQa}`;
 

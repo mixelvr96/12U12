@@ -940,11 +940,11 @@ a:hover {
   gap: clamp(1.5rem, 3vw, 2.5rem);
   column-gap: clamp(1.5rem, 3vw, 2.5rem);
   row-gap: 1.1rem;
-  align-items: start;
+  align-items: stretch;
   margin-bottom: 3rem;
 }
 
-/* С QA: строка 1 — только имя/роль; строка 2 — описание+фото | вопросы (верх совпадает с описанием) */
+/* С QA: строка 1 — текст слева | фото справа (одинаковая высота строки); строка 2 — QA под фото */
 .marketer-hero-grid:not(.marketer-hero-grid--no-qa) {
   grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
   grid-template-rows: auto auto;
@@ -953,11 +953,17 @@ a:hover {
 .marketer-hero-grid:not(.marketer-hero-grid--no-qa) .col-left__head {
   grid-column: 1;
   grid-row: 1;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .marketer-hero-grid:not(.marketer-hero-grid--no-qa) .col-left--body {
-  grid-column: 1;
-  grid-row: 2;
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  min-width: 0;
 }
 
 .marketer-hero-grid:not(.marketer-hero-grid--no-qa) .col-qa {
@@ -969,35 +975,41 @@ a:hover {
 
 .marketer-hero-grid--no-qa {
   grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-rows: auto auto;
-  align-items: start;
+  grid-template-rows: auto;
+  align-items: stretch;
   max-width: min(100%, var(--max));
 }
 
 .marketer-hero-grid--no-qa .col-left__head {
   grid-column: 1;
   grid-row: 1;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
-/* Фото в правой колонке с верхом на уровне имени (ряд 1–2, align-self: start) */
+/* Фото справа в одном ряду с блоком имя / роль / intro */
 .marketer-hero-grid--no-qa .col-photo--hero-rail {
   grid-column: 2;
-  grid-row: 1 / span 2;
+  grid-row: 1;
   align-self: start;
   width: 100%;
   max-width: var(--photo-hero-max);
   justify-self: end;
 }
 
+@media (min-width: 901px) {
+  .marketer-hero-grid--no-qa .col-left__head .marketer-fun-facts,
+  .marketer-hero-grid:not(.marketer-hero-grid--no-qa) .col-left__head .marketer-fun-facts {
+    margin-top: auto;
+  }
+}
+
 .marketer-hero-grid--no-qa .col-photo--hero-rail .photo-frame {
   margin-left: auto;
   margin-right: 0;
   max-width: 100%;
-}
-
-.marketer-hero-grid--no-qa .col-left--body {
-  grid-column: 1;
-  grid-row: 2;
 }
 
 .col-left--body {
@@ -1076,6 +1088,7 @@ a:hover {
   .marketer-hero-grid {
     grid-template-columns: 1fr;
     text-align: center;
+    align-items: start;
   }
 
   .marketer-hero-grid:not(.marketer-hero-grid--no-qa) .col-left__head,
@@ -1085,6 +1098,11 @@ a:hover {
     grid-row: auto;
   }
 
+  .marketer-hero-grid:not(.marketer-hero-grid--no-qa) .col-left__head,
+  .marketer-hero-grid--no-qa .col-left__head {
+    display: block;
+  }
+
   .col-left--body {
     align-items: center;
     width: 100%;
@@ -1092,7 +1110,7 @@ a:hover {
 
   .marketer-hero-grid--no-qa {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto;
   }
 
   .marketer-hero-grid--no-qa .col-left__head {
@@ -1107,14 +1125,7 @@ a:hover {
     justify-self: center;
   }
 
-  .marketer-hero-grid--no-qa .col-left--body {
-    grid-column: 1;
-    grid-row: 3;
-    align-items: center;
-  }
-
-  .marketer-hero-grid--no-qa .col-left__intro {
-    flex: none;
+  .marketer-hero-grid--no-qa .col-left__head .col-left__intro:not(.col-left__intro--empty) {
     max-width: 36rem;
   }
 
@@ -1142,6 +1153,13 @@ a:hover {
   .col-left__intro {
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .col-left__head .marketer-fun-facts {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: min(36rem, 100%);
+    text-align: left;
   }
 }
 
@@ -1179,9 +1197,51 @@ a:hover {
   text-align: left;
 }
 
-.marketer-hero-grid--no-qa .col-left__intro {
-  flex: 1 1 12rem;
-  min-width: 0;
+.col-left__head > .col-left__intro:not(.col-left__intro--empty) {
+  margin-top: 0.5rem;
+}
+
+.col-left__head .marketer-fun-facts {
+  margin-top: 1.1rem;
+  max-width: 32rem;
+  width: 100%;
+  padding: 0 0 0 1rem;
+  border-left: 2px solid rgba(0, 151, 178, 0.65);
+  text-align: left;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.col-left__head .marketer-fun-facts__title {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin: 0 0 0.65rem;
+}
+
+.col-left__head .marketer-fun-facts__list {
+  margin: 0;
+  padding: 0 0 0 1.15rem;
+  list-style: decimal;
+  font-family: var(--font-editorial);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.col-left__head .marketer-fun-facts__item {
+  margin: 0 0 0.45rem;
+  padding-left: 0.35rem;
+}
+
+.col-left__head .marketer-fun-facts__item:last-child {
+  margin-bottom: 0;
+}
+
+.marketer-hero-grid--no-qa .col-left__head .col-left__intro:not(.col-left__intro--empty) {
   max-width: none;
 }
 
@@ -1441,6 +1501,10 @@ a:hover {
 
 /* Кавычки как на About (mission), только вокруг ответа — внизу блока */
 .marketer-closing-coda__answer-quoted {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: clamp(0.35rem, 1.5vw, 0.65rem);
   margin: 2rem auto 0;
   padding: clamp(0.35rem, 1.5vw, 0.65rem) clamp(0.75rem, 3vw, 1.5rem) 0;
   max-width: 36rem;
@@ -1459,29 +1523,31 @@ a:hover {
   color: var(--cyan);
   opacity: 0.92;
   width: 100%;
-  text-align: center;
   pointer-events: none;
 }
 
 .marketer-closing-coda__answer-quoted::before {
   content: "\201C";
-  margin: 0 auto -0.12em;
+  margin: 0;
+  text-align: left;
 }
 
 .marketer-closing-coda__answer-quoted::after {
   content: "\201D";
-  margin: -0.08em auto 0;
+  margin: 0;
+  text-align: right;
 }
 
 .marketer-closing-coda__answer-line {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 0.8125rem;
+  font-size: clamp(1.1rem, 2.35vw, 1.3rem);
   font-weight: 600;
-  letter-spacing: 0.06em;
+  font-style: normal;
+  letter-spacing: 0.16em;
+  line-height: 1.35;
   text-transform: uppercase;
-  color: var(--text-muted);
-  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.7);
   text-align: center;
 }
 
@@ -1583,16 +1649,28 @@ a:hover {
   padding: 2rem 0 2.5rem;
 }
 
+/* Совпадает с .about-why-lines — левый край как у «12 YEARS OF ZORKA.AGENCY» */
 .about-stack {
-  max-width: 720px;
-  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.about-why-band > .about-stack {
+  max-width: min(60rem, 100%);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .about-stack .block-text {
-  font-size: 1rem;
-  line-height: 1.75;
-  color: var(--text-muted);
+  font-family: var(--font-editorial);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.82;
+  color: rgba(255, 255, 255, 0.82);
+  hyphens: none;
+  text-align: left;
   margin: 0 0 2rem;
+  max-width: none;
 }
 
 .about-why-band {
@@ -1685,10 +1763,16 @@ a:hover {
     grid-template-areas: none;
     row-gap: clamp(0.85rem, 2.2vw, 1.25rem);
     column-gap: clamp(1rem, 3vw, 2.25rem);
+    justify-items: start;
+    text-align: left;
   }
 
   .about-why-lines > :nth-child(n) {
     grid-area: auto;
+  }
+
+  .about-why-col__note {
+    text-align: left;
   }
 }
 
@@ -1862,6 +1946,102 @@ main > #team-root + .partner-links {
 .form-page {
   max-width: 520px;
   margin: 0 auto;
+}
+
+/* Contact: конверт + нижний слой wine; lighten убирает «чёрный фон» в PNG, оставляя конверт */
+.contact-page main {
+  position: relative;
+}
+
+.contact-page .site-header,
+.contact-page .nav-row {
+  position: relative;
+  z-index: 20;
+}
+
+.contact-page .nav-row .btn-back.nav-row__back,
+.contact-page .nav-row__pills,
+.contact-page .nav-row__pills a {
+  position: relative;
+  z-index: 21;
+}
+
+.contact-page .page-title {
+  position: relative;
+  z-index: 5;
+}
+
+.contact-page .form-page.contact-form-envelope {
+  max-width: min(980px, 99vw);
+  margin-top: clamp(-9.1rem, -14.6vw, -5.5rem);
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 1;
+  padding: clamp(0.65rem, 2vw, 1rem);
+  border: none;
+  border-radius: 6px;
+  overflow: hidden;
+  box-sizing: border-box;
+  background-color: var(--wine);
+  background-image:
+    url("../images/contact-envelope.png?v=wine-blend"),
+    linear-gradient(var(--wine), var(--wine));
+  background-repeat: no-repeat, no-repeat;
+  background-position: center 50%, center;
+  background-size: 118% 118%, 100% 100%;
+  background-blend-mode: lighten;
+  min-height: clamp(44rem, 110vw, 68rem);
+}
+
+.contact-page .contact-form-envelope__panel {
+  margin-top: clamp(38%, 40vw, 44%);
+  margin-left: auto;
+  margin-right: auto;
+  width: min(92%, 28rem);
+  padding: clamp(1.1rem, 3vw, 1.5rem);
+  background-color: #e3e2db;
+  border-radius: 4px;
+  border: 1px solid rgba(74, 24, 28, 0.2);
+  box-shadow: 0 2px 16px rgba(30, 0, 4, 0.2);
+  box-sizing: border-box;
+}
+
+.contact-page .contact-form-envelope__panel .form-group label {
+  color: #4a181c;
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0.01em;
+}
+
+.contact-page .contact-form-envelope__panel .form-group input,
+.contact-page .contact-form-envelope__panel .form-group textarea {
+  padding: 0.55rem 0;
+  border: none;
+  border-bottom: 1px solid rgba(74, 24, 28, 0.42);
+  background: transparent;
+  border-radius: 0;
+}
+
+.contact-page .contact-form-envelope__panel .form-group textarea {
+  min-height: 120px;
+}
+
+.contact-page .contact-form-envelope__panel .form-group input:focus,
+.contact-page .contact-form-envelope__panel .form-group textarea:focus {
+  outline: none;
+  border-bottom-color: #4a181c;
+}
+
+.contact-page .contact-form-envelope__panel .btn-submit {
+  background: var(--wine);
+  color: var(--white);
+}
+
+.contact-page .contact-form-envelope__panel .btn-submit:hover {
+  background: var(--cyan);
+  color: var(--white);
 }
 
 .form-intro {
@@ -2067,7 +2247,6 @@ a:hover {
 .tile-role,
 .col-left__head .role-line,
 .col-left__intro,
-.about-stack .block-text,
 .team-person .comment,
 .form-intro,
 .form-note,
