@@ -1,5 +1,5 @@
 /** Поднимайте число при правках `data/*.json`, иначе браузер может отдавать старый кэш без переносов/текста. */
-const DATA_JSON_VERSION = '43';
+const DATA_JSON_VERSION = '45';
 const MARKETERS_URL = `data/marketers.json?v=${DATA_JSON_VERSION}`;
 const TEAM_URL = `data/team.json?v=${DATA_JSON_VERSION}`;
 
@@ -243,35 +243,6 @@ function renderTeamMissionQuoteBand(mission) {
   return `<div class="team-mission-band">
     <blockquote class="mission-quote mission-quote--team">${inner}</blockquote>
   </div>`;
-}
-
-function renderWhyTwelveBlock(data) {
-  const w = data.whyTwelve;
-  if (!w || !w.title) return '';
-  const img =
-    w.image &&
-    `<div class="why-twelve-media-inner">
-      <img class="why-twelve-img" src="${escapeHtml(w.image)}" alt="${escapeHtml(w.imageAlt || '')}" loading="lazy" width="900" height="700">
-    </div>`;
-  const paras = (w.paragraphs || [])
-    .map((p) => `<p class="why-twelve-p">${escapeHtml(p)}</p>`)
-    .join('');
-  let closing = '';
-  if (w.closingParagraph) {
-    const c = w.closingParagraph;
-    closing = `<p class="why-twelve-p">${escapeHtml(c.before)}<em class="why-twelve-em">${escapeHtml(c.emphasis)}</em>${escapeHtml(c.after)}</p>`;
-  }
-  return `
-    <section class="why-twelve-section" aria-labelledby="why-twelve-heading">
-      <div class="why-twelve-inner">
-        <div class="why-twelve-media">${img || ''}</div>
-        <div class="why-twelve-copy">
-          <h2 id="why-twelve-heading" class="why-twelve-title">${escapeHtml(w.title)}</h2>
-          ${paras}
-          ${closing}
-        </div>
-      </div>
-    </section>`;
 }
 
 function renderHomeMediaInsightsHeading() {
@@ -916,20 +887,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const aboutIntroRoot = document.getElementById('about-intro-root');
-  const aboutBlocksRoot = document.getElementById('about-blocks-root');
-  if (aboutIntroRoot || aboutBlocksRoot) {
+  if (aboutIntroRoot) {
     loadMarketers()
       .then((data) => {
-        if (aboutIntroRoot) aboutIntroRoot.innerHTML = renderAboutIntro(data);
-        if (aboutBlocksRoot) {
-          aboutBlocksRoot.innerHTML = renderWhyTwelveBlock(data);
-        }
+        aboutIntroRoot.innerHTML = renderAboutIntro(data);
         queueMicrotask(() => scrollToHashInDocument());
       })
       .catch(() => {
-        const err = '<p class="error">Could not load page content.</p>';
-        if (aboutIntroRoot) aboutIntroRoot.innerHTML = err;
-        if (aboutBlocksRoot) aboutBlocksRoot.innerHTML = err;
+        aboutIntroRoot.innerHTML = '<p class="error">Could not load page content.</p>';
       });
   }
 });
