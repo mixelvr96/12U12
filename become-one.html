@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Great+Vibes&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=header-side-text-all-pages-1">
+  <link rel="stylesheet" href="css/style.css?v=cream-faf3ea-76">
 </head>
 <body>
   <header class="site-header">
@@ -28,7 +28,7 @@
   </header>
 
   <div class="nav-row">
-    <a href="index.html" class="btn-back nav-row__back">← Back</a>
+    <a href="index.html" class="btn-back nav-row__back"><span class="btn-back__arrow" aria-hidden="true">←</span> <span class="btn-back__label">Back</span></a>
     <nav class="nav-pills nav-row__pills" aria-label="Main">
       <a href="about.html">About project</a>
       <a href="team.html">Our team</a>
@@ -39,27 +39,36 @@
 
   <main class="become-one-page">
     <div class="form-page">
-      <p class="form-intro">Our project is new, but ambitions.<br>We believe that this is only the beginning.<br>To become a part of the next edition - please fill in the form below.</p>
+      <div id="become-form-section">
+        <p class="form-intro">We believe that this is only the beginning.<br>To become a part of the next edition - please fill in the form below.</p>
 
-      <form id="form-become" novalidate>
-        <div class="form-group">
-          <label for="become-name">Full name</label>
-          <input type="text" id="become-name" name="Full name" required autocomplete="name">
-        </div>
-        <div class="form-group">
-          <label for="become-email">Email</label>
-          <input type="email" id="become-email" name="Email" required autocomplete="email">
-        </div>
-        <div class="form-group">
-          <label for="become-li">LinkedIn</label>
-          <input type="url" id="become-li" name="LinkedIn" placeholder="https://linkedin.com/in/..." autocomplete="url">
-        </div>
-        <div class="form-group">
-          <label for="become-why">Why do you want to join our project</label>
-          <textarea id="become-why" name="Why do you want to join our project" required></textarea>
-        </div>
-        <button type="submit" class="btn-submit">Send</button>
-      </form>
+        <form id="form-become" novalidate>
+          <div class="form-group">
+            <label for="become-name">Full name</label>
+            <input type="text" id="become-name" name="Full name" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="become-email">Email</label>
+            <input type="email" id="become-email" name="Email" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="become-li">LinkedIn</label>
+            <input type="url" id="become-li" name="LinkedIn" placeholder="https://linkedin.com/in/..." autocomplete="url" required>
+          </div>
+          <div class="form-group">
+            <label for="become-why">Why do you want to join our project</label>
+            <textarea id="become-why" name="Why do you want to join our project" required></textarea>
+          </div>
+          <button type="submit" class="btn-submit"><span class="btn-submit__label">Send</span></button>
+        </form>
+      </div>
+
+      <div id="become-thankyou" class="form-thankyou" hidden role="status" aria-live="polite">
+        <p class="form-thankyou__text">
+          Thank you for your message.<br>
+          Our team will contact you shortly.
+        </p>
+      </div>
     </div>
 
     <nav class="partner-links" aria-label="Project partners">
@@ -72,7 +81,7 @@
     </nav>
   </main>
 
-  <script src="js/app.js?v=site-title-cycle"></script>
-  <script src="js/forms.js?v=forms-ajax-send"></script>
+  <script src="js/app.js?v=data-v45"></script>
+  <script src="js/forms.js?v=forms-email-strict"></script>
 </body>
 </html>

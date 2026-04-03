@@ -1,30 +1,40 @@
 {
-  "intro": "People who make this format possible",
+  "intro": "People who make this project possible",
   "members": [
     {
-      "name": "{Name}",
-      "role": "{title}",
-      "comment": "{quote}"
+      "name": "Viktor Ryzhov",
+      "role": "CMO",
+      "company": "Zorka.Agency",
+      "photo": "images/team/01.png"
     },
     {
-      "name": "{Name}",
-      "role": "{title}",
-      "comment": "{quote}"
+      "name": "Vladimir Petrov",
+      "role": "Influencer Marketing Director",
+      "company": "Zorka.Agency",
+      "photo": "images/team/02.png"
     },
     {
-      "name": "{Name}",
-      "role": "{title}",
-      "comment": "{quote}"
+      "name": "Ryan Hilliard",
+      "role": "CEO",
+      "company": "Influencer Marketing Hub",
+      "photo": "images/team/03.png"
     },
     {
-      "name": "{Name}",
-      "role": "{title}",
-      "comment": "{quote}"
+      "name": "Maryia Shapavalava",
+      "role": "Chief Editor",
+      "company": "Zorka.Agency",
+      "photo": "images/team/04.png"
     },
     {
-      "name": "{Name}",
-      "role": "{title}",
-      "comment": "{quote}"
+      "name": "Alexandra Sioubarova",
+      "role": "Digital Marketer",
+      "company": "Zorka.Agency",
+      "photo": "images/team/05.png"
+    },
+    {
+      "name": "Olya Apostolova",
+      "role": "Account Manager",
+      "company": "Influencer Marketing Hub"
     }
   ]
 }

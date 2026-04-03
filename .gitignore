@@ -6,6 +6,9 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
+# Cursor
+.cursor/
+
 # Editor / temp
 *~
 *.swp

@@ -1,5 +1,5 @@
 /** Поднимайте число при правках `data/*.json`, иначе браузер может отдавать старый кэш без переносов/текста. */
-const DATA_JSON_VERSION = '26';
+const DATA_JSON_VERSION = '43';
 const MARKETERS_URL = `data/marketers.json?v=${DATA_JSON_VERSION}`;
 const TEAM_URL = `data/team.json?v=${DATA_JSON_VERSION}`;
 
@@ -91,10 +91,26 @@ function renderPolaroidCaptionHtml(m) {
     .slice(1)
     .map((ln) => ln.trim())
     .filter((ln) => ln.length > 0);
-  const bodyInner = tail.map((ln) => escapeHtml(ln)).join('<br>');
+
+  let bodyInner;
+  if (!m.polaroidCaption && m.status === 'published' && tail.length > 0) {
+    const nameLine = escapeHtml(tail[0]);
+    const rest = tail.slice(1).map((ln) => escapeHtml(ln)).join('<br>');
+    bodyInner = `<span class="polaroid-caption__name">${nameLine}</span>`;
+    if (rest) bodyInner += '<br>' + rest;
+  } else {
+    bodyInner = tail.map((ln) => escapeHtml(ln)).join('<br>');
+  }
+
   const body =
     bodyInner.length > 0 ? `<span class="polaroid-caption__body">${bodyInner}</span>` : '';
-  return `<span class="polaroid-caption__kicker">${kicker}</span>${body ? '<br>' + body : ''}`;
+  const companyTrimmed =
+    m.company && String(m.company).trim() ? String(m.company).trim() : '';
+  const companyHtml =
+    !m.polaroidCaption && m.status === 'published' && companyTrimmed
+      ? `<span class="polaroid-caption__company">${escapeHtml(companyTrimmed)}</span>`
+      : '';
+  return `<span class="polaroid-caption__kicker">${kicker}</span>${body ? '<br>' + body : ''}${companyHtml}`;
 }
 
 function renderPolaroidCard(m, tiltIndex) {
@@ -204,30 +220,29 @@ function renderAboutIntro(data) {
     .join('');
 }
 
-function renderMissionBlock(data) {
-  const mission = data.mission;
+/** Внутренняя HTML цитаты миссии (кавычки — через CSS ::before/::after у .mission-quote) */
+function buildMissionQuoteInnerHtml(mission) {
   if (!mission || !mission.quote) return '';
-  const rawTitle = mission.title != null ? String(mission.title).trim() : '';
-  const title = rawTitle ? escapeHtml(rawTitle) : '';
   const parts = mission.quote.split(/\n\n+/).map((p) => p.trim()).filter(Boolean);
-  let quoteHtml;
   if (parts.length >= 2) {
     const rest = parts.slice(1).join('\n\n');
-    quoteHtml =
+    return (
       escapeHtml(parts[0]) +
       '<br><br><span class="mission-quote-accent">' +
       escapeHtml(rest) +
-      '</span>';
-  } else {
-    quoteHtml = escapeHtml(mission.quote);
+      '</span>'
+    );
   }
-  const labelledBy = title ? ' aria-labelledby="mission-heading"' : '';
-  const heading = title ? `<h2 id="mission-heading" class="mission-heading">${title}</h2>` : '';
-  return `
-    <section class="mission-section" id="mission"${labelledBy}>
-      ${heading}
-      <blockquote class="mission-quote">${quoteHtml}</blockquote>
-    </section>`;
+  return escapeHtml(mission.quote);
+}
+
+/** Цитата между двумя рядами полароидов на Our team (компактнее, чем на About) */
+function renderTeamMissionQuoteBand(mission) {
+  if (!mission || !mission.quote) return '';
+  const inner = buildMissionQuoteInnerHtml(mission);
+  return `<div class="team-mission-band">
+    <blockquote class="mission-quote mission-quote--team">${inner}</blockquote>
+  </div>`;
 }
 
 function renderWhyTwelveBlock(data) {
@@ -259,13 +274,22 @@ function renderWhyTwelveBlock(data) {
     </section>`;
 }
 
+function renderHomeMediaInsightsHeading() {
+  return `
+    <section class="home-forbes-quote home-forbes-quote--left home-forbes-quote--media-insights" aria-label="Media insights">
+      <blockquote class="home-forbes-quote__inner">
+        <p class="home-forbes-quote__media-heading">Media insights</p>
+      </blockquote>
+    </section>`;
+}
+
 function renderHomeForbesQuote() {
   const text =
     'Influencer marketers are no longer just campaign managers – they are brand relationship architects.';
   return `
     <section class="home-forbes-quote home-forbes-quote--left" aria-label="Quote from Forbes">
       <blockquote class="home-forbes-quote__inner" cite="https://www.forbes.com/">
-        <p>${escapeHtml(text)}</p>
+        <p class="home-forbes-quote__body">${escapeHtml(text)}</p>
         <footer class="home-forbes-quote__src">Forbes</footer>
       </blockquote>
     </section>`;
@@ -274,9 +298,9 @@ function renderHomeForbesQuote() {
 function renderHomeBusinessInsiderQuote() {
   const text = 'The job has evolved into managing talent, data, and brand safety all at once.';
   return `
-    <section class="home-forbes-quote home-forbes-quote--left" aria-label="Quote from Business Insider">
+    <section class="home-forbes-quote home-forbes-quote--right" aria-label="Quote from Business Insider">
       <blockquote class="home-forbes-quote__inner" cite="https://www.businessinsider.com/">
-        <p>${escapeHtml(text)}</p>
+        <p class="home-forbes-quote__body">${escapeHtml(text)}</p>
         <footer class="home-forbes-quote__src">Business Insider</footer>
       </blockquote>
     </section>`;
@@ -288,7 +312,7 @@ function renderHomeGuardianQuote() {
   return `
     <section class="home-forbes-quote home-forbes-quote--left" aria-label="Quote from The Guardian">
       <blockquote class="home-forbes-quote__inner" cite="https://www.theguardian.com/">
-        <p>${escapeHtml(text)}</p>
+        <p class="home-forbes-quote__body">${escapeHtml(text)}</p>
         <footer class="home-forbes-quote__src">The Guardian</footer>
       </blockquote>
     </section>`;
@@ -368,7 +392,7 @@ function renderHomeGrid(data) {
         ${renderPolaroidGridHtml(marketers)}
       </div>
     </div>
-  </section>${renderHomeForbesQuote()}${renderHomeBusinessInsiderQuote()}${renderHomeGuardianQuote()}`;
+  </section>${renderHomeMediaInsightsHeading()}${renderHomeForbesQuote()}${renderHomeBusinessInsiderQuote()}${renderHomeGuardianQuote()}`;
 }
 
 function initPolaroidScroll(driver) {
@@ -747,29 +771,60 @@ function initSectionCarousel(root) {
   );
 }
 
-function renderTeamPage(data) {
-  const members = (data.members || [])
-    .map(
-      (mem) => `
-    <div class="team-person">
-      <div class="photo-frame">
-        ${
-          mem.photo
-            ? `<img class="team-photo" src="${escapeHtml(mem.photo)}" alt="" loading="lazy" width="300" height="300">`
-            : photoPlaceholder()
-        }
-      </div>
-      <h3>${escapeHtml(mem.name)}</h3>
-      <p class="role">${escapeHtml(mem.role)}</p>
-      <p class="comment">${escapeHtml(mem.comment)}</p>
-    </div>`
-    )
-    .join('');
-
+function renderTeamMemberCard(mem, idx) {
+  const tilt = (idx % 12) + 1;
+  const spotlightCls = idx === 3 ? ' team-person--polaroid-spotlight' : '';
+  const photoSrc = mem.photo
+    ? (() => {
+        const base = String(mem.photo);
+        const sep = base.includes('?') ? '&' : '?';
+        return `${base}${sep}v=${DATA_JSON_VERSION}`;
+      })()
+    : '';
+  const photoInner = mem.photo
+    ? `<img class="polaroid-photo" src="${escapeHtml(photoSrc)}" alt="${escapeHtml(mem.name || 'Team member')}" loading="lazy" width="300" height="300">`
+    : `<div class="tile-photo-placeholder team-polaroid-placeholder"><span class="tile-photo-placeholder__soon">—</span></div>`;
+  const commentBlock =
+    mem.comment && String(mem.comment).trim()
+      ? `<p class="comment">${escapeHtml(mem.comment)}</p>`
+      : '';
+  const company = mem.company != null ? String(mem.company).trim() : '';
+  const companyHtml = company
+    ? `<span class="polaroid-caption__company">${escapeHtml(company)}</span>`
+    : '';
   return `
-    <p class="team-intro">${escapeHtml(data.intro || '')}</p>
-    <div class="team-grid">${members}</div>
-  `;
+    <article class="team-person team-person--polaroid polaroid-card polaroid-tilt--${tilt}${spotlightCls}">
+      <div class="polaroid-frame team-polaroid-frame">
+        <div class="polaroid-photo-area">
+          ${photoInner}
+        </div>
+        <p class="polaroid-caption team-polaroid-caption">
+          <span class="polaroid-caption__kicker">${escapeHtml(mem.name || '')}</span><br>
+          <span class="polaroid-caption__body">${escapeHtml(mem.role || '')}</span>${companyHtml}
+        </p>
+      </div>
+      ${commentBlock}
+    </article>`;
+}
+
+function renderTeamPage(teamData, marketersData) {
+  const memberList = teamData.members || [];
+  const mission = marketersData && marketersData.mission;
+  const intro = `<p class="team-intro">${escapeHtml(teamData.intro || '')}</p>`;
+
+  if (memberList.length === 0) {
+    return `${intro}<p class="loading">Нет данных о команде.</p>`;
+  }
+
+  const mid = Math.ceil(memberList.length / 2);
+  const row1 = memberList.slice(0, mid).map((m, i) => renderTeamMemberCard(m, i)).join('');
+  const row2 = memberList.slice(mid).map((m, i) => renderTeamMemberCard(m, i + mid)).join('');
+  const quoteBand = renderTeamMissionQuoteBand(mission);
+
+  return `${intro}
+    <div class="team-grid team-grid--row">${row1}</div>
+    ${quoteBand}
+    <div class="team-grid team-grid--row">${row2}</div>`;
 }
 
 function scrollToHashInDocument() {
@@ -851,9 +906,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const teamRoot = document.getElementById('team-root');
   if (teamRoot) {
-    loadTeam()
-      .then((data) => {
-        teamRoot.innerHTML = renderTeamPage(data);
+    Promise.all([loadTeam(), loadMarketers()])
+      .then(([teamData, marketersData]) => {
+        teamRoot.innerHTML = renderTeamPage(teamData, marketersData);
       })
       .catch(() => {
         teamRoot.innerHTML = '<p class="error">Не удалось загрузить команду.</p>';
@@ -867,7 +922,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .then((data) => {
         if (aboutIntroRoot) aboutIntroRoot.innerHTML = renderAboutIntro(data);
         if (aboutBlocksRoot) {
-          aboutBlocksRoot.innerHTML = `${renderMissionBlock(data)}${renderWhyTwelveBlock(data)}`;
+          aboutBlocksRoot.innerHTML = renderWhyTwelveBlock(data);
         }
         queueMicrotask(() => scrollToHashInDocument());
       })

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Great+Vibes&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=header-side-text-all-pages-1">
+  <link rel="stylesheet" href="css/style.css?v=cream-faf3ea-76">
 </head>
 <body class="contact-page">
   <header class="site-header">
@@ -28,7 +28,7 @@
   </header>
 
   <div class="nav-row">
-    <a href="index.html" class="btn-back nav-row__back">← Back</a>
+    <a href="index.html" class="btn-back nav-row__back"><span class="btn-back__arrow" aria-hidden="true">←</span> <span class="btn-back__label">Back</span></a>
     <nav class="nav-pills nav-row__pills" aria-label="Main">
       <a href="about.html">About project</a>
       <a href="team.html">Our team</a>
@@ -40,23 +40,44 @@
   <main>
     <h1 class="page-title">Contact us</h1>
 
+    <!-- Декоративное письмо: файл images/contact-letter.png (под белой формой по слоям) -->
     <div class="form-page contact-form-envelope">
+      <div class="contact-letter-visual" aria-hidden="true">
+        <img
+          class="contact-letter-img"
+          src="images/contact-letter.png"
+          alt=""
+          width="4098"
+          height="2304"
+          loading="eager"
+          decoding="async"
+        >
+      </div>
       <div class="contact-form-envelope__panel">
-        <form id="form-contact" novalidate>
-          <div class="form-group">
-            <label for="contact-name">Full Name</label>
-            <input type="text" id="contact-name" name="Full Name" required autocomplete="name">
-          </div>
-          <div class="form-group">
-            <label for="contact-email">Email</label>
-            <input type="email" id="contact-email" name="Email" required autocomplete="email">
-          </div>
-          <div class="form-group">
-            <label for="contact-help">How can we help you?</label>
-            <textarea id="contact-help" name="How can we help you?" required></textarea>
-          </div>
-          <button type="submit" class="btn-submit">Send</button>
-        </form>
+        <div id="contact-form-section">
+          <form id="form-contact" novalidate>
+            <div class="form-group">
+              <label for="contact-name">Full Name</label>
+              <input type="text" id="contact-name" name="Full Name" required autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Email</label>
+              <input type="email" id="contact-email" name="Email" required autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label for="contact-help">How can we help you?</label>
+              <textarea id="contact-help" name="How can we help you?" required></textarea>
+            </div>
+            <button type="submit" class="btn-submit"><span class="btn-submit__label">Send</span></button>
+          </form>
+        </div>
+
+        <div id="contact-thankyou" class="form-thankyou" hidden role="status" aria-live="polite">
+          <p class="form-thankyou__text">
+            Thank you for your message.<br>
+            Our team will contact you shortly.
+          </p>
+        </div>
       </div>
     </div>
 
@@ -70,7 +91,7 @@
     </nav>
   </main>
 
-  <script src="js/app.js?v=site-title-cycle"></script>
-  <script src="js/forms.js?v=forms-ajax-send"></script>
+  <script src="js/app.js?v=data-v45"></script>
+  <script src="js/forms.js?v=forms-email-strict"></script>
 </body>
 </html>

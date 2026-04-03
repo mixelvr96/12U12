@@ -1,25 +1,81 @@
-/* 12 UNDER 12 — винный фон, белый текст, акцент cyan */
+/* 12 UNDER 12 — винный фон, пудровый крем #faf3ea (--text) как акцент вместо терракоты */
+@font-face {
+  font-family: "Neue Montreal";
+  src:
+    local("Neue Montreal"),
+    local("NeueMontreal"),
+    url("../fonts/NeueMontreal-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Neue Montreal";
+  src:
+    local("Neue Montreal Medium"),
+    local("NeueMontreal-Medium"),
+    url("../fonts/NeueMontreal-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "New Icon Script";
+  src:
+    local("New Icon Script"),
+    local("NewIconScript"),
+    url("../fonts/NewIconScript-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Цитаты на главной: локальный Merriweather (латиница), не зависит от Google Fonts link */
+@font-face {
+  font-family: "Merriweather";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/Merriweather-Regular-latin.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
-  --white: #f6f4f1;
+  --white: #faf3ea;
   --wine: #5f040d;
   --wine-hover: #4a030a;
-  --cyan: #0097b2;
-  --cyan-hover: #5fc4d4;
-  --text: #f6f4f1;
-  --text-muted: rgba(255, 255, 255, 0.78);
-  --border: rgba(255, 255, 255, 0.28);
-  --surface: rgba(255, 255, 255, 0.12);
-  --surface-card: rgba(255, 255, 255, 0.08);
+  /* legacy names: бывш. терракота → тот же пудровый, что основной текст */
+  --terracotta: #faf3ea;
+  --terracotta-hover: #ffffff;
+  --text: #faf3ea;
+  --text-muted: rgba(250, 243, 234, 0.78);
+  --border: rgba(250, 243, 234, 0.28);
+  --surface: rgba(250, 243, 234, 0.12);
+  --surface-card: rgba(250, 243, 234, 0.08);
   --max: 1200px;
   --font-display: "Anton", sans-serif;
   --font-script: "Great Vibes", cursive;
-  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-body: "Neue Montreal", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-editorial: Georgia, "Times New Roman", Times, serif;
+  --font-neue-montreal: "Neue Montreal", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-new-icon-script: "New Icon Script", "Great Vibes", cursive;
   --photo-tile-max: 220px;
   --photo-hero-max: 420px;
   --photo-team-max: 330px;
   /* Интервью и карусели на странице маркетолога — одна ширина */
   --marketer-sections-width: min(100%, 56rem);
+}
+
+.font-neue-montreal {
+  font-family: var(--font-neue-montreal);
+}
+
+.font-new-icon-script {
+  font-family: var(--font-new-icon-script);
 }
 
 *,
@@ -58,7 +114,7 @@ a {
 }
 
 a:hover {
-  color: var(--cyan);
+  color: var(--terracotta);
   text-decoration: underline;
 }
 
@@ -79,7 +135,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: clamp(0.65rem, 1.5vw, 1rem);
+  gap: clamp(1.35rem, 3.25vw, 2.35rem);
   text-align: center;
 }
 
@@ -102,14 +158,14 @@ a:hover {
 .site-header__tagline,
 .site-header__year {
   margin: 0;
-  font-family: var(--font-body);
-  font-size: clamp(0.6875rem, 1.65vw, 0.8125rem);
+  font-family: var(--font-display);
+  font-size: clamp(1.16015625rem, 2.784375vw, 1.37109375rem);
   font-style: normal;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.45;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text);
   text-align: center;
 }
 
@@ -177,7 +233,7 @@ a:hover {
 }
 
 .brand-line__link:hover {
-  color: var(--cyan);
+  color: var(--terracotta);
 }
 
 .site-title {
@@ -264,22 +320,22 @@ a:hover {
 .nav-pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1rem;
+  gap: 0.55rem 1.125rem;
   justify-content: center;
   align-items: center;
-  padding: 1.5rem 1rem clamp(2.5rem, 5.5vw, 4.25rem);
+  padding: 2.125rem 1rem clamp(2.5rem, 5.5vw, 4.25rem);
   max-width: var(--max);
   margin: 0 auto;
 }
 
 .nav-pills a {
-  font-size: 0.875rem;
+  font-size: 0.96875rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--white);
   text-decoration: none;
-  padding: 0.5rem 1rem;
+  padding: 0.625rem 1.2rem;
   border-radius: 999px;
   border-bottom: none;
   transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
@@ -288,10 +344,10 @@ a:hover {
 .nav-pills a:hover {
   color: var(--wine);
   text-decoration: none;
-  background: rgba(255, 255, 255, 0.94);
+  background: rgba(250, 243, 234, 0.94);
   box-shadow:
-    0 0 26px rgba(255, 255, 255, 0.45),
-    0 0 0 1px rgba(255, 255, 255, 0.55);
+    0 0 26px rgba(250, 243, 234, 0.45),
+    0 0 0 1px rgba(250, 243, 234, 0.55);
 }
 
 /* Back + centered nav (About) */
@@ -302,7 +358,7 @@ a:hover {
   gap: 0.75rem 1rem;
   max-width: var(--max);
   margin: 0 auto;
-  padding: 1.5rem 1rem clamp(2.5rem, 5.5vw, 4.25rem);
+  padding: 2.125rem 1rem clamp(2.5rem, 5.5vw, 4.25rem);
   padding-left: max(0px, env(safe-area-inset-left, 0px));
   overflow-x: visible;
 }
@@ -366,7 +422,7 @@ a:hover {
   height: 48px;
   border: 1px solid var(--border);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(250, 243, 234, 0.1);
   font-size: 1.35rem;
   font-weight: 600;
   line-height: 1;
@@ -381,12 +437,12 @@ a:hover {
 }
 
 .ec-nav:hover:not(:disabled):not(.is-disabled) {
-  background: rgba(255, 255, 255, 0.2);
-  color: var(--cyan);
+  background: rgba(250, 243, 234, 0.2);
+  color: var(--terracotta);
 }
 
 .ec-nav:focus-visible {
-  outline: 2px solid var(--cyan);
+  outline: 2px solid var(--terracotta);
   outline-offset: 2px;
 }
 
@@ -463,17 +519,17 @@ a:hover {
 }
 
 .marketer-tile a.tile-link:hover .tile-name {
-  color: var(--cyan);
+  color: var(--terracotta);
 }
 
-/* Полароид: белая «матовая» рамка, шире поле снизу, лёгкая тень */
+/* Полароид: светлая «матовая» рамка, шире поле снизу, мягкая тень */
 .photo-frame {
-  background: var(--white);
+  background: #faf5ec;
   padding: 0.55rem 0.55rem 1.85rem 0.55rem;
-  border: 1px solid rgba(0, 0, 0, 0.07);
+  border: 1px solid rgba(250, 243, 234, 0.55);
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.08),
-    0 10px 28px rgba(0, 0, 0, 0.2);
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 10px 28px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
   line-height: 0;
   border-radius: 1px;
@@ -486,7 +542,7 @@ a:hover {
   width: 100%;
   object-fit: cover;
   display: block;
-  background: var(--white);
+  background: #faf5ec;
   border: none;
 }
 
@@ -495,7 +551,7 @@ a:hover {
   aspect-ratio: 1 / 1;
   width: 100%;
   min-height: 0;
-  background: var(--white);
+  background: #faf5ec;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -541,7 +597,7 @@ a:hover {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--cyan);
+  color: var(--terracotta);
   margin: 0 0 0.25rem;
   text-align: center;
 }
@@ -602,7 +658,7 @@ a:hover {
   font-weight: 400;
   font-size: clamp(2.75rem, 7vw, 4.5rem);
   line-height: 0.85;
-  color: var(--cyan);
+  color: var(--terracotta);
   opacity: 0.92;
   pointer-events: none;
   width: 100%;
@@ -625,7 +681,7 @@ a:hover {
 }
 
 .mission-quote-accent {
-  color: var(--cyan);
+  color: var(--terracotta);
   font-style: italic;
 }
 
@@ -791,7 +847,7 @@ a:hover {
   display: block;
   width: 1px;
   height: 0.85rem;
-  background: rgba(255, 255, 255, 0.22);
+  background: rgba(250, 243, 234, 0.22);
   flex-shrink: 0;
 }
 
@@ -832,7 +888,7 @@ a:hover {
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(250, 243, 234, 0.7);
   text-decoration: none;
   padding: 0.2rem 0;
   border-bottom: 1px solid transparent;
@@ -843,7 +899,7 @@ a:hover {
 
 .partner-links__brand:hover {
   color: var(--white);
-  border-bottom-color: rgba(255, 255, 255, 0.45);
+  border-bottom-color: rgba(250, 243, 234, 0.45);
   text-decoration: none;
 }
 
@@ -920,7 +976,7 @@ a:hover {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--cyan);
+  color: var(--terracotta);
   margin-bottom: 2rem;
   text-decoration: none;
   border: none;
@@ -930,9 +986,24 @@ a:hover {
   padding: 0;
 }
 
+.btn-back__arrow {
+  color: var(--terracotta);
+}
+
+.btn-back__label {
+  color: #faf3ea;
+}
+
 .btn-back:hover {
-  color: var(--cyan-hover);
   text-decoration: underline;
+}
+
+.btn-back:hover .btn-back__arrow {
+  color: var(--terracotta-hover);
+}
+
+.btn-back:hover .btn-back__label {
+  color: #faf3ea;
 }
 
 .marketer-hero-grid {
@@ -1075,13 +1146,13 @@ a:hover {
   font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.72;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(250, 243, 234, 0.8);
   hyphens: auto;
 }
 
 .marketer-hero-grid .qa-row--hero .qa-card:not(:last-child) {
   padding-bottom: 1.15rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom: 1px solid rgba(250, 243, 234, 0.14);
 }
 
 @media (max-width: 900px) {
@@ -1174,7 +1245,7 @@ a:hover {
 
 .col-left__head .role-line {
   font-size: 0.9375rem;
-  color: var(--cyan);
+  color: var(--terracotta);
   margin: 0.75rem 0 0;
   display: flex;
   flex-direction: column;
@@ -1218,7 +1289,7 @@ a:hover {
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--cyan);
+  color: var(--terracotta);
   margin: 0 0 0.65rem;
 }
 
@@ -1229,7 +1300,7 @@ a:hover {
   font-family: var(--font-editorial);
   font-size: 0.875rem;
   line-height: 1.55;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(250, 243, 234, 0.85);
 }
 
 .col-left__head .marketer-fun-facts__item {
@@ -1302,7 +1373,7 @@ a:hover {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--cyan);
+  color: var(--terracotta);
 }
 
 .quote-dots {
@@ -1360,7 +1431,7 @@ a:hover {
   flex-direction: column;
   gap: 2.75rem;
   padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: 1px solid rgba(250, 243, 234, 0.2);
 }
 
 .marketer-story-continuation > .marketer-story-kicker,
@@ -1378,7 +1449,7 @@ a:hover {
   font-weight: 600;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--cyan);
+  color: var(--terracotta);
 }
 
 .story-topic-panel {
@@ -1403,7 +1474,7 @@ a:hover {
   font-size: 1.0625rem;
   font-weight: 400;
   line-height: 1.82;
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(250, 243, 234, 0.82);
   hyphens: auto;
 }
 
@@ -1520,7 +1591,7 @@ a:hover {
   font-weight: 400;
   font-size: clamp(2rem, 5vw, 3.25rem);
   line-height: 0.9;
-  color: var(--cyan);
+  color: var(--terracotta);
   opacity: 0.92;
   width: 100%;
   pointer-events: none;
@@ -1547,7 +1618,7 @@ a:hover {
   letter-spacing: 0.16em;
   line-height: 1.35;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(250, 243, 234, 0.7);
   text-align: center;
 }
 
@@ -1560,7 +1631,7 @@ a:hover {
   padding: 0;
   margin: 0;
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(250, 243, 234, 0.12);
   border-radius: 50%;
   cursor: pointer;
   font-size: 0;
@@ -1584,15 +1655,15 @@ a:hover {
 
 .carousel-arrow:hover {
   color: var(--wine);
-  background: rgba(255, 255, 255, 0.94);
-  border-color: rgba(255, 255, 255, 0.55);
+  background: rgba(250, 243, 234, 0.94);
+  border-color: rgba(250, 243, 234, 0.55);
   box-shadow:
-    0 0 26px rgba(255, 255, 255, 0.45),
-    0 0 0 1px rgba(255, 255, 255, 0.55);
+    0 0 26px rgba(250, 243, 234, 0.45),
+    0 0 0 1px rgba(250, 243, 234, 0.55);
 }
 
 .carousel-arrow:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.85);
+  outline: 2px solid rgba(250, 243, 234, 0.85);
   outline-offset: 3px;
 }
 
@@ -1661,17 +1732,20 @@ a:hover {
   margin-right: auto;
 }
 
+/* Как .about-why-col__note («Instead of putting our own…»), крупнее для вводных абзацев */
 .about-stack .block-text {
-  font-family: var(--font-editorial);
-  font-size: 1.0625rem;
+  font-family: var(--font-body);
+  font-size: clamp(1.05rem, 2.15vw, 1.25rem);
   font-weight: 400;
-  line-height: 1.82;
-  color: rgba(255, 255, 255, 0.82);
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+  color: var(--text-muted);
   hyphens: none;
   text-align: left;
   margin: 0 0 2rem;
   max-width: none;
 }
+
 
 .about-why-band {
   max-width: 100%;
@@ -1680,7 +1754,7 @@ a:hover {
 }
 
 .about-why-heading {
-  margin: clamp(3.5rem, 12vw, 6.5rem) auto clamp(2rem, 5vw, 3.25rem);
+  margin: clamp(3.5rem, 12vw, 6.5rem) auto clamp(3.25rem, 8vw, 5.25rem);
   padding: 0;
   max-width: min(720px, 100%);
   font-family: var(--font-display);
@@ -1714,7 +1788,7 @@ a:hover {
 /* Три столбца: ряд заголовков, затем ряд описаний (один уровень старта текста) */
 .about-why-lines {
   max-width: min(60rem, 100%);
-  margin: 0 auto clamp(3.25rem, 8vw, 5.5rem);
+  margin: 0 auto clamp(5rem, 12vw, 8rem);
   padding: 0;
   display: grid;
   grid-template-columns: 1fr;
@@ -1726,10 +1800,10 @@ a:hover {
     "t3"
     "n3";
   row-gap: clamp(0.85rem, 2.2vw, 1.25rem);
-  column-gap: clamp(1rem, 3vw, 2.25rem);
+  column-gap: clamp(1.75rem, 4.5vw, 3.5rem);
   align-items: start;
-  justify-items: center;
-  text-align: center;
+  justify-items: start;
+  text-align: left;
 }
 
 .about-why-lines > :nth-child(1) {
@@ -1762,7 +1836,7 @@ a:hover {
     grid-template-rows: auto auto;
     grid-template-areas: none;
     row-gap: clamp(0.85rem, 2.2vw, 1.25rem);
-    column-gap: clamp(1rem, 3vw, 2.25rem);
+    column-gap: clamp(1.75rem, 4.5vw, 3.5rem);
     justify-items: start;
     text-align: left;
   }
@@ -1779,15 +1853,16 @@ a:hover {
 .about-why-col__note {
   margin: 0;
   padding: 0;
-  max-width: 16.5rem;
+  max-width: none;
+  min-width: 0;
   font-family: var(--font-body);
-  font-size: clamp(0.8rem, 1.45vw, 0.9rem);
+  font-size: clamp(0.98rem, 1.85vw, 1.125rem);
   font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 1.6;
   text-transform: none;
   color: var(--text-muted);
-  text-align: center;
+  text-align: left;
 }
 
 .about-why-col__note strong {
@@ -1800,7 +1875,7 @@ a:hover {
   margin: 0;
   padding: 0;
   font-family: var(--font-body);
-  font-size: clamp(0.8125rem, 1.65vw, 0.9375rem);
+  font-size: clamp(0.9375rem, 1.95vw, 1.0625rem);
   font-weight: 600;
   letter-spacing: 0.08em;
   line-height: 1.5;
@@ -1813,15 +1888,30 @@ a:hover {
   padding-top: 0;
 }
 
-/* Линия после BUT WHY 12 — у первого блока (Mission) */
-.about-blocks-root .mission-section:first-child {
+/* Линия после BUT WHY 12 — у первого блока в колонке (Why 12) */
+.about-blocks-root .why-twelve-section:first-child {
   border-top: none;
   padding-top: clamp(0.75rem, 2vw, 1.5rem);
   margin-top: clamp(3rem, 7.5vw, 5.5rem);
 }
 
-.about-blocks-root .mission-section {
+.about-blocks-root .why-twelve-section {
   margin-bottom: clamp(3rem, 7vw, 5.5rem);
+}
+
+/* About: текст на всю ширину колонки рядом с рядом полароидов, крупнее */
+.about-blocks-root .why-twelve-copy {
+  max-width: none;
+}
+
+.about-blocks-root .why-twelve-title {
+  font-size: clamp(1.65rem, 4.5vw, 2.35rem);
+  margin-bottom: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+.about-blocks-root .why-twelve-p {
+  font-size: clamp(1.08rem, 2.2vw, 1.3rem);
+  line-height: 1.68;
 }
 
 .about-stack .block-img {
@@ -1848,6 +1938,10 @@ a:hover {
   /* как между nav-row (нижний padding) и этим блоком */
   --team-root-nav-gap: clamp(0.35rem, 1.5vw, 0.85rem);
   --team-root-nav-pad: clamp(2.5rem, 5.5vw, 4.25rem);
+  /* совпадает с .team-person--polaroid / .team-grid — ширина ряда из 3 карточек */
+  --team-pol-card: clamp(210px, 26vw, 300px);
+  --team-pol-gap-x: clamp(2rem, 4vw, 3rem);
+  --team-pol-row-w: calc(3 * var(--team-pol-card) + 2 * var(--team-pol-gap-x));
   margin-top: var(--team-root-nav-gap);
   margin-bottom: calc((var(--team-root-nav-pad) + var(--team-root-nav-gap)) * 2);
 }
@@ -1857,16 +1951,20 @@ main > #team-root + .partner-links {
   margin-top: 0;
 }
 
+/* Как заголовки колонок на About (.about-why-line): Neue Montreal, caps, 600 */
 .team-intro {
   text-align: center;
   max-width: 42rem;
   margin: 0 auto clamp(3rem, 6.5vw, 4.75rem);
   padding: 0 1rem;
-  font-size: clamp(1.15rem, 2.65vw, 1.4rem);
-  line-height: 1.65;
-  font-weight: 200;
-  font-style: italic;
-  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: clamp(0.9375rem, 1.95vw, 1.0625rem);
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  color: var(--white);
 }
 
 .team-grid {
@@ -1884,6 +1982,16 @@ main > #team-root + .partner-links {
   box-sizing: border-box;
 }
 
+.team-person--polaroid {
+  flex: 0 1 clamp(210px, 26vw, 300px);
+  max-width: clamp(210px, 26vw, 300px);
+}
+
+/* Не наследовать flex главной ленты (.polaroid-card flex: 0 0 auto) — единая сетка Our team */
+.team-grid .team-person--polaroid.polaroid-card {
+  flex: 0 1 clamp(210px, 26vw, 300px);
+}
+
 @media (max-width: 768px) {
   .team-grid {
     flex-direction: column;
@@ -1897,42 +2005,130 @@ main > #team-root + .partner-links {
     flex: 0 0 auto;
     max-width: 400px;
   }
+
+  .team-person--polaroid {
+    max-width: min(300px, 100%);
+  }
+
+  /* Цитата — как у колонки полароидов (сетка max-width: 400px) */
+  .team-mission-band {
+    width: min(100%, 400px);
+  }
 }
 
-.team-person .photo-frame {
+.team-person--polaroid .team-polaroid-frame {
+  background: #faf5ec;
+  border-color: rgba(250, 243, 234, 0.55);
+  box-shadow:
+    0 0.4rem 1rem rgba(0, 0, 0, 0.2),
+    0 0.12rem 0.38rem rgba(0, 0, 0, 0.11);
+}
+
+.team-person--polaroid .polaroid-photo-area {
+  border-color: rgba(250, 243, 234, 0.45);
+  background: rgba(252, 248, 240, 0.65);
+}
+
+.team-person--polaroid .polaroid-photo-area .team-polaroid-placeholder {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  max-width: var(--photo-team-max);
-  margin-left: auto;
-  margin-right: auto;
+  height: 100%;
+  min-height: 0;
+  aspect-ratio: unset;
+  box-sizing: border-box;
 }
 
-.team-person h3 {
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-  text-transform: uppercase;
-  margin: 1rem 0 0.25rem;
-  line-height: 1.2;
+/* 4-я карточка в общем списке: крупнее (класс вешается по индексу в JS) */
+.team-grid .team-person--polaroid-spotlight .polaroid-photo {
+  object-position: 50% 42%;
+  transform: translateY(8%) scale(1.16) translateZ(0);
+  transform-origin: center center;
+}
+
+/* Цитата миссии — та же ширина, что ряд из трёх полароидов (левый/правый край с сеткой) */
+.team-mission-band {
+  width: min(100%, var(--team-pol-row-w, 100%));
+  max-width: none;
+  margin: clamp(1.75rem, 4.5vw, 2.75rem) auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Не Georgia: веса 200/300 для неё часто не существуют, браузер не меняет вид. */
+.team-page .mission-quote--team {
+  margin: 0 auto;
+  padding: clamp(1rem, 3vw, 1.6rem) clamp(0.35rem, 2.5vw, 1rem) 0;
+  font-family: var(--font-body);
+  font-size: clamp(1.12rem, 2.5vw, 1.45rem);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.035em;
+  line-height: 1.55;
+  text-align: center;
+  white-space: pre-line;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
   color: var(--white);
+  -webkit-font-smoothing: antialiased;
 }
 
-.team-person .role {
-  font-size: 0.8125rem;
-  color: var(--cyan);
-  font-weight: 600;
-  text-transform: uppercase;
+.team-page .mission-quote--team::before,
+.team-page .mission-quote--team::after {
+  font-size: clamp(2.1rem, 5.25vw, 3.1rem);
+}
+
+.team-page .mission-quote--team::before {
+  margin: 0 0 -0.16em clamp(-1rem, -3.2vw, -0.4rem);
+  text-align: left;
+}
+
+.team-page .mission-quote--team::after {
+  text-align: right;
+}
+
+.team-person--polaroid .team-polaroid-caption {
+  color: var(--wine);
+  /* Одинаковая высота блока подписи: короткие роли (напр. CMO) не укорачивают карточку */
+  min-height: clamp(4.2rem, 12.5vw, 6.5rem);
+  box-sizing: border-box;
+}
+
+.team-person--polaroid .team-polaroid-caption .polaroid-caption__kicker {
+  font-weight: 700;
+}
+
+.team-person--polaroid .team-polaroid-caption .polaroid-caption__body {
+  color: var(--wine);
+  font-weight: 400;
+}
+
+.team-person--polaroid .team-polaroid-caption .polaroid-caption__company {
+  display: block;
+  margin-top: 0.2em;
+  font-style: normal;
+  font-weight: 400;
   letter-spacing: 0.04em;
-  margin: 0 0 0.75rem;
+  text-transform: uppercase;
+  color: var(--wine);
 }
 
 .team-person .comment {
   font-size: 0.9375rem;
   color: var(--text-muted);
   line-height: 1.65;
-  margin: 0;
+  margin: 1.1rem 0 0;
   text-align: left;
 }
 
 /* —— Forms —— */
+/* Become one: тот же вертикальный шаг, что от низа nav до контента и от контента до partner-links */
+main.become-one-page {
+  --become-one-rhythm: calc(
+    clamp(2.5rem, 5.5vw, 4.25rem) + clamp(0.45rem, 1.35vw, 0.95rem)
+  );
+}
+
 .become-one-page .form-page {
   margin-top: clamp(0.45rem, 1.35vw, 0.95rem);
 }
@@ -1940,7 +2136,125 @@ main > #team-root + .partner-links {
 .become-one-page .form-intro {
   margin-bottom: clamp(2.5rem, 5.5vw, 3.75rem);
   font-style: italic;
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(250, 243, 234, 0.82);
+}
+
+/* Невалидные обязательные поля при отправке: 3 вспышки белый ↔ #d7727e полупрозрачный */
+@keyframes form-field-invalid-flash {
+  0%,
+  33.333%,
+  66.666% {
+    background-color: #fff;
+  }
+
+  16.666%,
+  50%,
+  83.333% {
+    background-color: rgba(215, 114, 126, 0.42);
+  }
+
+  100% {
+    background-color: rgba(250, 243, 234, 0.95);
+  }
+}
+
+.form-field--invalid-flash {
+  animation: form-field-invalid-flash 1.35s ease forwards;
+}
+
+@keyframes form-field-invalid-flash-contact {
+  0%,
+  33.333%,
+  66.666% {
+    background-color: rgba(255, 255, 255, 0.96);
+    border-bottom-color: rgba(74, 24, 28, 0.42);
+  }
+
+  16.666%,
+  50%,
+  83.333% {
+    background-color: rgba(215, 114, 126, 0.38);
+    border-bottom-color: rgba(215, 114, 126, 0.78);
+  }
+
+  100% {
+    background-color: transparent;
+    border-bottom-color: rgba(74, 24, 28, 0.42);
+  }
+}
+
+.contact-page .contact-form-envelope__panel .form-field--invalid-flash-contact {
+  animation: form-field-invalid-flash-contact 1.35s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-field--invalid-flash,
+  .contact-page .contact-form-envelope__panel .form-field--invalid-flash-contact {
+    animation-duration: 0.35s;
+  }
+}
+
+.become-one-page #become-thankyou {
+  text-align: center;
+}
+
+/* Become one после отправки: как Contact — кремовая карточка, текст по центру */
+.become-one-page #become-thankyou:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(11rem, 26vh, 18rem);
+  padding: clamp(1.1rem, 3vw, 1.5rem);
+  margin-top: 2.5cm;
+  margin-left: auto;
+  margin-right: auto;
+  width: min(92%, 28rem);
+  max-width: 100%;
+  box-sizing: border-box;
+  background-color: #faf3ea;
+  border-radius: 4px;
+  border: 1px solid rgba(74, 24, 28, 0.14);
+  box-shadow:
+    0 2px 16px rgba(30, 0, 4, 0.2),
+    0 0 0 1px rgba(250, 243, 234, 0.08);
+}
+
+.become-one-page .form-thankyou__text {
+  margin: 0;
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.become-one-page #become-thankyou:not([hidden]) .form-thankyou__text {
+  color: rgba(74, 24, 28, 0.92);
+}
+
+/* Большой зазор от меню и до partner-links, когда показан thank you */
+.become-one-page .form-page:has(#become-thankyou:not([hidden])) {
+  margin-top: clamp(3.5rem, 11vh, 7rem);
+}
+
+main.become-one-page > .partner-links {
+  margin-top: var(--become-one-rhythm);
+}
+
+main.become-one-page:has(#become-thankyou:not([hidden])) > .partner-links {
+  margin-top: clamp(5rem, 16vw, 10rem);
+}
+
+.contact-page .contact-form-envelope__panel .form-thankyou {
+  text-align: center;
+  padding: clamp(0.5rem, 2vw, 1rem) 0 0;
+}
+
+.contact-page .contact-form-envelope__panel .form-thankyou__text {
+  margin: 0;
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: rgba(74, 24, 28, 0.92);
 }
 
 .form-page {
@@ -1948,9 +2262,10 @@ main > #team-root + .partner-links {
   margin: 0 auto;
 }
 
-/* Contact: конверт + нижний слой wine; lighten убирает «чёрный фон» в PNG, оставляя конверт */
+/* Contact: фон wine, форма в панели */
 .contact-page main {
   position: relative;
+  overflow: visible;
 }
 
 .contact-page .site-header,
@@ -1973,43 +2288,86 @@ main > #team-root + .partner-links {
 
 .contact-page .form-page.contact-form-envelope {
   max-width: min(980px, 99vw);
-  margin-top: clamp(-9.1rem, -14.6vw, -5.5rem);
+  margin-top: clamp(-2rem, -4vw, -0.25rem);
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
   position: relative;
   z-index: 1;
-  padding: clamp(0.65rem, 2vw, 1rem);
+  min-height: min(88vh, 48rem);
+  padding: clamp(2rem, 5vw, 3.5rem) clamp(0.65rem, 2vw, 1rem);
   border: none;
   border-radius: 6px;
-  overflow: hidden;
+  overflow: visible;
   box-sizing: border-box;
   background-color: var(--wine);
-  background-image:
-    url("../images/contact-envelope.png?v=wine-blend"),
-    linear-gradient(var(--wine), var(--wine));
-  background-repeat: no-repeat, no-repeat;
-  background-position: center 50%, center;
-  background-size: 118% 118%, 100% 100%;
-  background-blend-mode: lighten;
-  min-height: clamp(44rem, 110vw, 68rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Письмо (images/contact-letter.png): чуть меньше предыдущего шага, под формой */
+.contact-page .contact-letter-visual {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  width: min(169rem, calc(96vw * 1.41));
+  max-width: min(141vw, 169rem);
+  margin: 0;
+  pointer-events: none;
+}
+
+.contact-page .contact-letter-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: min(124vh, 152rem);
+  margin: 0 auto;
+  object-fit: contain;
+  object-position: center center;
 }
 
 .contact-page .contact-form-envelope__panel {
-  margin-top: clamp(38%, 40vw, 44%);
+  position: relative;
+  z-index: 2;
+  margin-top: 0;
   margin-left: auto;
   margin-right: auto;
   width: min(92%, 28rem);
   padding: clamp(1.1rem, 3vw, 1.5rem);
-  background-color: #e3e2db;
+  /* Тот же крем, что --white / основной текст */
+  background-color: #faf3ea;
   border-radius: 4px;
-  border: 1px solid rgba(74, 24, 28, 0.2);
-  box-shadow: 0 2px 16px rgba(30, 0, 4, 0.2);
+  border: 1px solid rgba(74, 24, 28, 0.14);
+  box-shadow:
+    0 2px 16px rgba(30, 0, 4, 0.2),
+    0 0 0 1px rgba(250, 243, 234, 0.08);
   box-sizing: border-box;
+}
+
+/* После отправки: кремовая панель (~в 2× меньше прежнего блока), текст по центру */
+.contact-page .contact-form-envelope__panel:has(#contact-thankyou:not([hidden])) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(11rem, 26vh, 18rem);
+  padding: clamp(1.1rem, 3vw, 1.5rem);
+  margin-top: 4.5cm;
+}
+
+.contact-page .contact-form-envelope__panel:has(#contact-thankyou:not([hidden])) .form-thankyou {
+  padding: 0;
+  width: 100%;
+  flex: 0 0 auto;
 }
 
 .contact-page .contact-form-envelope__panel .form-group label {
   color: #4a181c;
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
   text-transform: none;
   letter-spacing: 0.01em;
@@ -2022,6 +2380,7 @@ main > #team-root + .partner-links {
   border-bottom: 1px solid rgba(74, 24, 28, 0.42);
   background: transparent;
   border-radius: 0;
+  font-style: normal;
 }
 
 .contact-page .contact-form-envelope__panel .form-group textarea {
@@ -2032,16 +2391,6 @@ main > #team-root + .partner-links {
 .contact-page .contact-form-envelope__panel .form-group textarea:focus {
   outline: none;
   border-bottom-color: #4a181c;
-}
-
-.contact-page .contact-form-envelope__panel .btn-submit {
-  background: var(--wine);
-  color: var(--white);
-}
-
-.contact-page .contact-form-envelope__panel .btn-submit:hover {
-  background: var(--cyan);
-  color: var(--white);
 }
 
 .form-intro {
@@ -2071,7 +2420,7 @@ main > #team-root + .partner-links {
   border: 1px solid var(--border);
   font-family: inherit;
   font-size: 1rem;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(250, 243, 234, 0.95);
   color: #1a1a1a;
 }
 
@@ -2082,8 +2431,51 @@ main > #team-root + .partner-links {
 
 .form-group input:focus,
 .form-group textarea:focus {
-  outline: 2px solid var(--cyan);
+  outline: 2px solid var(--wine);
   outline-offset: 2px;
+}
+
+/* Become one: поле не «перекрашивается» при наборе (autofill, :invalid email, фокус) */
+.become-one-page .form-group input,
+.become-one-page .form-group textarea {
+  border-color: rgba(250, 243, 234, 0.28);
+  background-color: rgba(250, 243, 234, 0.95);
+}
+
+.become-one-page .form-group input:focus,
+.become-one-page .form-group textarea:focus {
+  outline: none;
+  border-color: rgba(250, 243, 234, 0.28);
+  box-shadow: none;
+}
+
+.become-one-page .form-group input:focus-visible,
+.become-one-page .form-group textarea:focus-visible {
+  outline: 2px solid var(--wine);
+  outline-offset: 2px;
+}
+
+.become-one-page .form-group input:invalid,
+.become-one-page .form-group textarea:invalid {
+  border-color: rgba(250, 243, 234, 0.28);
+  box-shadow: none;
+}
+
+.become-one-page .form-group input:-moz-ui-invalid,
+.become-one-page .form-group textarea:-moz-ui-invalid {
+  box-shadow: none;
+}
+
+.become-one-page .form-group input:-webkit-autofill,
+.become-one-page .form-group input:-webkit-autofill:hover,
+.become-one-page .form-group input:-webkit-autofill:focus,
+.become-one-page .form-group textarea:-webkit-autofill,
+.become-one-page .form-group textarea:-webkit-autofill:hover,
+.become-one-page .form-group textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: #1a1a1a;
+  caret-color: #1a1a1a;
+  box-shadow: 0 0 0 1000px rgba(250, 243, 234, 0.95) inset;
+  transition: background-color 99999s ease-out 0s;
 }
 
 .btn-submit {
@@ -2102,8 +2494,72 @@ main > #team-root + .partner-links {
 }
 
 .btn-submit:hover {
-  background: var(--cyan);
+  background: var(--wine);
   color: var(--white);
+}
+
+/* Send — обводка + пудровая заливка от центра: Become one (винный фон) и Contact (кремовая панель) */
+.become-one-page .btn-submit,
+.contact-page .contact-form-envelope__panel .btn-submit {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  background: transparent;
+  color: var(--white);
+  border: 1px solid rgba(250, 243, 234, 0.42);
+  box-sizing: border-box;
+  transition: color 0.75s cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.contact-page .contact-form-envelope__panel .btn-submit {
+  color: var(--wine);
+  border-color: rgba(95, 4, 13, 0.3);
+}
+
+.become-one-page .btn-submit .btn-submit__label,
+.contact-page .contact-form-envelope__panel .btn-submit .btn-submit__label {
+  position: relative;
+  z-index: 1;
+}
+
+.become-one-page .btn-submit::before,
+.contact-page .contact-form-envelope__panel .btn-submit::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  background: var(--text);
+  transform: scaleX(0);
+  transform-origin: center center;
+  transition: transform 0.85s cubic-bezier(0.42, 0, 0.58, 1);
+  z-index: 0;
+}
+
+.become-one-page .btn-submit:hover,
+.contact-page .contact-form-envelope__panel .btn-submit:hover {
+  color: var(--wine);
+  border-color: rgba(250, 243, 234, 0.5);
+}
+
+.become-one-page .btn-submit:hover::before,
+.contact-page .contact-form-envelope__panel .btn-submit:hover::before {
+  transform: scaleX(1);
+}
+
+.become-one-page .btn-submit:focus-visible,
+.contact-page .contact-form-envelope__panel .btn-submit:focus-visible {
+  outline: 2px solid rgba(250, 243, 234, 0.75);
+  outline-offset: 3px;
+}
+
+.contact-page .contact-form-envelope__panel .btn-submit:focus-visible {
+  outline-color: rgba(95, 4, 13, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .become-one-page .btn-submit::before,
+  .contact-page .contact-form-envelope__panel .btn-submit::before {
+    transition-duration: 0.01ms;
+  }
 }
 
 .form-note {
@@ -2133,18 +2589,18 @@ main > #team-root + .partner-links {
   color: #ffb4b4;
 }
 
-/* --- Винный фон, белый/светлый текст --- */
+/* --- Винный фон, кремовый текст (#faf3ea) --- */
 :root {
-  --white: #f6f4f1;
+  --white: #faf3ea;
   --wine: #70020f;
   --wine-hover: #5a010c;
-  --cyan: #007f9a;
-  --cyan-hover: #5fc4d4;
-  --text: #f6f4f1;
-  --text-muted: rgba(255, 255, 255, 0.78);
-  --border: rgba(255, 255, 255, 0.28);
-  --surface: rgba(255, 255, 255, 0.12);
-  --surface-card: rgba(255, 255, 255, 0.08);
+  --terracotta: #faf3ea;
+  --terracotta-hover: #ffffff;
+  --text: #faf3ea;
+  --text-muted: rgba(250, 243, 234, 0.78);
+  --border: rgba(250, 243, 234, 0.28);
+  --surface: rgba(250, 243, 234, 0.12);
+  --surface-card: rgba(250, 243, 234, 0.08);
 }
 
 body {
@@ -2157,7 +2613,16 @@ a {
 }
 
 a:hover {
-  color: var(--cyan);
+  color: var(--terracotta);
+}
+
+/* Back: стрелка — светлее пудры при hover, слово — #faf3ea */
+a.btn-back:hover .btn-back__arrow {
+  color: var(--terracotta-hover);
+}
+
+a.btn-back:hover .btn-back__label {
+  color: #faf3ea;
 }
 
 .site-title a:hover,
@@ -2172,17 +2637,16 @@ a:hover {
 .marketer-kicker,
 .col-left__head .full-name,
 .section-panel h3,
-.team-person h3,
 .brand-line,
 .form-group label {
   color: var(--text);
 }
 
 .nav-pills a {
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(250, 243, 234, 0.95);
   text-decoration: none;
   border-bottom: none;
-  padding: 0.5rem 1rem;
+  padding: 0.625rem 1.2rem;
   border-radius: 999px;
   transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -2190,38 +2654,38 @@ a:hover {
 .nav-pills a:hover {
   color: var(--wine);
   text-decoration: none;
-  background: rgba(255, 255, 255, 0.94);
+  background: rgba(250, 243, 234, 0.94);
   box-shadow:
-    0 0 26px rgba(255, 255, 255, 0.45),
-    0 0 0 1px rgba(255, 255, 255, 0.55);
+    0 0 26px rgba(250, 243, 234, 0.45),
+    0 0 0 1px rgba(250, 243, 234, 0.55);
 }
 
 .nav-pills a:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.85);
+  outline: 2px solid rgba(250, 243, 234, 0.85);
   outline-offset: 3px;
   text-decoration: none;
 }
 
 .nav-pills a[aria-current="page"] {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.32);
+  color: var(--text);
+  background: rgba(250, 243, 234, 0.32);
   box-shadow:
-    0 0 28px rgba(255, 255, 255, 0.5),
-    0 0 0 1px rgba(255, 255, 255, 0.72);
-  text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
+    0 0 28px rgba(250, 243, 234, 0.5),
+    0 0 0 1px rgba(250, 243, 234, 0.72);
+  text-shadow: 0 0 14px rgba(250, 243, 234, 0.35);
 }
 
 .nav-pills a[aria-current="page"]:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.42);
+  color: var(--text);
+  background: rgba(250, 243, 234, 0.42);
   box-shadow:
-    0 0 36px rgba(255, 255, 255, 0.62),
-    0 0 0 1px rgba(255, 255, 255, 0.88);
-  text-shadow: 0 0 18px rgba(255, 255, 255, 0.45);
+    0 0 36px rgba(250, 243, 234, 0.62),
+    0 0 0 1px rgba(250, 243, 234, 0.88);
+  text-shadow: 0 0 18px rgba(250, 243, 234, 0.45);
 }
 
 .marketer-tile a.tile-link:hover .tile-name {
-  color: var(--cyan);
+  color: var(--terracotta);
 }
 
 .home-grid {
@@ -2272,12 +2736,13 @@ a:hover {
 }
 
 .btn-submit:hover {
-  background: var(--cyan);
+  background: var(--wine);
   color: var(--white);
 }
 
 /* —— Forbes quote: на главной сразу после ленты полароидов, перед блоком партнёров —— */
 .home-forbes-quote {
+  --home-forbes-quote-text: rgba(250, 243, 234, 0.82);
   width: 100%;
   max-width: none;
   margin: 0;
@@ -2317,27 +2782,32 @@ a:hover {
   padding: 0;
   border: none;
   text-align: center;
+  quotes: none;
 }
 
-.home-forbes-quote__inner p {
+/* Текст цитат Forbes / BI / Guardian: Merriweather (@font-face выше) */
+.home-forbes-quote__inner p.home-forbes-quote__body {
   margin: 0 0 1.1rem;
-  font-size: clamp(0.9375rem, 2.2vw, 1.125rem);
-  font-style: italic;
+  font-family: "Merriweather", Georgia, "Times New Roman", serif !important;
+  font-size: 1.3125rem;
+  font-style: normal;
   font-weight: 400;
-  line-height: 1.65;
-  color: var(--white);
-  letter-spacing: 0.01em;
+  font-synthesis: none;
+  line-height: 1.82;
+  letter-spacing: normal;
+  color: var(--home-forbes-quote-text);
+  hyphens: auto;
   text-wrap: pretty;
 }
 
 .home-forbes-quote__src {
   margin: 0;
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 600;
   font-style: normal;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--cyan);
+  color: var(--terracotta);
 }
 
 .home-forbes-quote__src::before {
@@ -2404,72 +2874,43 @@ a:hover {
     z-index 0s linear 0s;
 }
 
-.polaroid-tilt--1 {
-  transform: rotate(-2.4deg);
-}
-
-.polaroid-tilt--2 {
-  transform: rotate(1.1deg);
-}
-
-.polaroid-tilt--3 {
-  transform: rotate(-0.6deg);
-}
-
-.polaroid-tilt--4 {
-  transform: rotate(2deg);
-}
-
-.polaroid-tilt--5 {
-  transform: rotate(-1.2deg);
-}
-
-.polaroid-tilt--6 {
-  transform: rotate(0.9deg);
-}
-
-.polaroid-tilt--7 {
-  transform: rotate(-1.5deg);
-}
-
-.polaroid-tilt--8 {
-  transform: rotate(1.3deg);
-}
-
-.polaroid-tilt--9 {
-  transform: rotate(-0.8deg);
-}
-
-.polaroid-tilt--10 {
-  transform: rotate(1.8deg);
-}
-
-.polaroid-tilt--11 {
-  transform: rotate(-1.1deg);
-}
-
+/* Без наклона — все полароиды ровные */
+.polaroid-tilt--1,
+.polaroid-tilt--2,
+.polaroid-tilt--3,
+.polaroid-tilt--4,
+.polaroid-tilt--5,
+.polaroid-tilt--6,
+.polaroid-tilt--7,
+.polaroid-tilt--8,
+.polaroid-tilt--9,
+.polaroid-tilt--10,
+.polaroid-tilt--11,
 .polaroid-tilt--12 {
-  transform: rotate(0.7deg);
+  transform: none;
 }
 
 .polaroid-card--vacant .polaroid-photo-area--vacant {
-  opacity: 0.5;
-  background: rgba(255, 255, 255, 0.05);
+  opacity: 0.72;
+  background: rgba(252, 248, 240, 0.55);
 }
 
-/* Выпуск 01: белый полароид, винные рамки и винный текст */
+/* Выпуск 01: светлый полароид, мягкие винные рамки и винный текст */
 .polaroid-card--lead .polaroid-link {
   color: var(--wine);
 }
 
 .polaroid-card--lead .polaroid-frame {
-  background: var(--white);
-  border-color: var(--wine);
+  background: #faf5ec;
+  border-color: rgba(95, 4, 13, 0.38);
+  box-shadow:
+    0 0.35rem 0.9rem rgba(0, 0, 0, 0.18),
+    0 0.1rem 0.32rem rgba(0, 0, 0, 0.1);
 }
 
 .polaroid-card--lead .polaroid-photo-area {
-  background: var(--white);
-  border-color: var(--wine);
+  background: #faf5ec;
+  border-color: rgba(95, 4, 13, 0.32);
 }
 
 .polaroid-card--lead .polaroid-caption {
@@ -2477,8 +2918,8 @@ a:hover {
 }
 
 .polaroid-card--lead .polaroid-read-pill {
-  border-color: var(--wine);
-  background: rgba(95, 4, 13, 0.12);
+  border-color: rgba(95, 4, 13, 0.35);
+  background: rgba(252, 248, 240, 0.85);
 }
 
 .polaroid-card--lead .polaroid-read-pill__text {
@@ -2501,11 +2942,11 @@ a:hover {
   width: 100%;
   padding: 0.58rem 0.58rem 0.45rem;
   padding-bottom: 2rem;
-  border: 1px solid var(--border);
-  background: transparent;
+  border: 1px solid rgba(250, 243, 234, 0.5);
+  background: rgba(252, 248, 240, 0.55);
   box-shadow:
-    0 0.5rem 1.25rem rgba(0, 0, 0, 0.4),
-    0 0.15rem 0.45rem rgba(0, 0, 0, 0.28);
+    0 0.4rem 1rem rgba(0, 0, 0, 0.22),
+    0 0.12rem 0.38rem rgba(0, 0, 0, 0.12);
   border-radius: 0;
   box-sizing: border-box;
 }
@@ -2518,8 +2959,8 @@ a:hover {
   width: 100%;
   aspect-ratio: 1;
   flex-shrink: 0;
-  border: 2px solid var(--border);
-  background: transparent;
+  border: 2px solid rgba(250, 243, 234, 0.45);
+  background: rgba(252, 248, 240, 0.4);
   line-height: 0;
   overflow: hidden;
 }
@@ -2532,23 +2973,27 @@ a:hover {
   object-fit: cover;
   display: block;
   z-index: 0;
+  transform: translateZ(0);
 }
 
+/* Вне потока — иначе скрытая плашка на lead-карточке сужает область фото снизу */
 .polaroid-read-pill {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   z-index: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 0.28em 1.05em 0.32em;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(250, 243, 234, 0.45);
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(252, 248, 240, 0.35);
   box-sizing: border-box;
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  transform: scale(0.92);
+  transform: translate(-50%, -50%) scale(0.92);
   transition:
     opacity 0.28s ease,
     visibility 0.28s ease,
@@ -2575,12 +3020,12 @@ a:hover {
 .polaroid-card:has(.polaroid-link:focus-visible) .polaroid-read-pill {
   opacity: 1;
   visibility: visible;
-  transform: scale(1);
-  border-color: rgba(255, 255, 255, 0.55);
-  background: rgba(255, 255, 255, 0.94);
+  transform: translate(-50%, -50%) scale(1);
+  border-color: rgba(250, 243, 234, 0.55);
+  background: rgba(250, 243, 234, 0.94);
   box-shadow:
-    0 0 26px rgba(255, 255, 255, 0.45),
-    0 0 0 1px rgba(255, 255, 255, 0.55);
+    0 0 26px rgba(250, 243, 234, 0.45),
+    0 0 0 1px rgba(250, 243, 234, 0.55);
 }
 
 .polaroid-card:has(.polaroid-link:hover) .polaroid-read-pill__text,
@@ -2605,7 +3050,7 @@ a:hover {
 }
 
 .polaroid-caption__kicker {
-  font-style: italic;
+  font-style: normal;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -2618,6 +3063,25 @@ a:hover {
   letter-spacing: 0.04em;
   text-transform: uppercase;
   margin-top: 0.2em;
+}
+
+/* Главная: должность и компания — как на Our team */
+.home-page .polaroid-caption .polaroid-caption__body {
+  font-weight: 400;
+}
+
+.home-page .polaroid-caption .polaroid-caption__company {
+  display: block;
+  margin-top: 0.2em;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: inherit;
+}
+
+.polaroid-caption__name {
+  font-weight: 700;
 }
 
 .polaroid-scroll-driver--reduced {
@@ -2656,6 +3120,27 @@ a:hover {
   }
 
   .polaroid-card:has(.polaroid-link:hover) .polaroid-read-pill {
-    transform: none;
+    transform: translate(-50%, -50%);
   }
+}
+
+/* Главная: цитаты под полароидами — последним в файле */
+body.home-page #home-grid-container .home-forbes-quote p.home-forbes-quote__body {
+  font-family: "Merriweather", Georgia, "Times New Roman", serif !important;
+  font-synthesis: none;
+}
+
+/* «Media insights» — Neue Montreal (как UI), не Merriweather у цитат */
+body.home-page #home-grid-container .home-forbes-quote__media-heading {
+  margin: 0 0 1.1rem;
+  font-family: var(--font-body) !important;
+  font-size: clamp(0.875rem, 1.85vw, 1.0625rem);
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.45;
+  color: var(--terracotta) !important;
+  hyphens: none;
+  text-wrap: balance;
 }

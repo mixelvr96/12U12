@@ -16,20 +16,20 @@
 
     main {
       margin: 0;
-      padding: clamp(2.25rem, 7vh, 5rem) 1rem clamp(2rem, 5vw, 3rem);
+      padding: max(0px, env(safe-area-inset-top)) 0 max(0px, env(safe-area-inset-bottom));
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
       min-height: 100vh;
+      min-height: 100dvh;
       box-sizing: border-box;
     }
 
-    /* Обёртка: поверх картинки — круглая зона «Join our newsletter» на сургуче */
     .coming-soon-wrap {
       position: relative;
       width: fit-content;
-      max-width: min(98vw, 1000px);
+      max-width: min(100vw, 2800px);
       margin-left: auto;
       margin-right: auto;
     }
@@ -39,27 +39,30 @@
       width: auto;
       max-width: 100%;
       height: auto;
-      max-height: min(98vh, 1480px);
+      max-height: min(
+        calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)),
+        1800px
+      );
       margin: 0 auto;
     }
 
     .newsletter-seal {
       position: absolute;
       left: 50%;
-      bottom: 30.5%;
-      width: 34%;
-      max-width: 380px;
+      bottom: 14%;
+      width: 14%;
+      max-width: 200px;
       aspect-ratio: 1;
-      transform: translate(-50%, -8px);
+      transform: translate(-50%, -6px);
       border-radius: 50%;
       box-sizing: border-box;
       background: transparent;
       cursor: pointer;
-      -webkit-tap-highlight-color: rgba(255, 255, 255, 0.15);
+      -webkit-tap-highlight-color: rgba(250, 243, 234, 0.15);
     }
 
     .newsletter-seal:hover {
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(250, 243, 234, 0.06);
     }
 
     .newsletter-seal:focus {
@@ -67,7 +70,7 @@
     }
 
     .newsletter-seal:focus-visible {
-      outline: 3px solid rgba(255, 255, 255, 0.95);
+      outline: 3px solid rgba(250, 243, 234, 0.95);
       outline-offset: 3px;
     }
 
@@ -88,7 +91,13 @@
   <main>
     <h1 class="visually-hidden">Zorka.Agency × Influencer Marketing Hub — coming soon. Stay tuned.</h1>
     <div class="coming-soon-wrap">
-      <img class="coming-soon-art" src="images/coming-soon.png?v=24" alt="Zorka.Agency × Influencer Marketing Hub. Coming soon. Stay tuned. Join our newsletter on the wax seal." width="1242" height="2688">
+      <img
+        class="coming-soon-art"
+        src="images/12u12.webp?v=disk-webp-3"
+        alt="Zorka.Agency × Influencer Marketing Hub. Coming soon. Stay tuned. Join our newsletter on the wax seal."
+        width="10667"
+        height="6000"
+      >
       <a
         class="newsletter-seal"
         href="mailto:info@zorka.agency?subject=12%20UNDER%2012%20%E2%80%94%20Newsletter&amp;body=Please%20subscribe%20me%20to%20the%20email%20newsletter.%0A%0AMy%20email%3A%20"
