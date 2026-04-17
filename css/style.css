@@ -86,6 +86,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
@@ -390,7 +391,7 @@ a:hover {
 
   .nav-row .btn-back.nav-row__back {
     grid-column: 1;
-    left: -2.65rem;
+    left: 0;
   }
 
   .nav-row__pills {
@@ -493,10 +494,11 @@ a:hover {
   }
 
   .ec-nav {
-    flex: 0 0 40px;
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
     font-size: 1.15rem;
   }
 }
@@ -1626,8 +1628,10 @@ a:hover {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   padding: 0;
   margin: 0;
   border: 1px solid var(--border);
@@ -3169,4 +3173,56 @@ body.home-page #home-grid-container .home-forbes-quote__media-heading {
   color: var(--terracotta) !important;
   hyphens: none;
   text-wrap: balance;
+}
+
+/* —— Small mobile (≤ 480px): tighten paddings, enlarge tap targets, protect headers —— */
+@media (max-width: 480px) {
+  main {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .site-header {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .nav-pills {
+    gap: 0.45rem 0.65rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .nav-pills a {
+    padding: 0.55rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  .nav-row {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .partner-links {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .contact-page .form-page.contact-form-envelope {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .contact-page .contact-form-envelope__panel {
+    width: min(96%, 28rem);
+  }
+
+  .about-why-band {
+    padding: 0 1rem;
+  }
+
+  /* Partner brand labels get cramped at 320px — allow tighter letter-spacing */
+  .partner-links__brand {
+    letter-spacing: 0.12em;
+  }
 }
